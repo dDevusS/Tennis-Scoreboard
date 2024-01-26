@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+java {
+    JavaVersion.VERSION_20
+}
+
+group = 'com.ddevuss'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core:3.25.2'
+
+    implementation 'org.hibernate:hibernate-core:6.4.2.Final'
+    implementation 'org.hibernate:hibernate-validator:8.0.1.Final'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0-M1'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    implementation 'com.h2database:h2:2.2.224'
+}
+
+test {
+    useJUnitPlatform()
+}
