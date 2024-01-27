@@ -1,23 +1,20 @@
 package com.ddevuss.tennisScoreboard.util;
 
 import lombok.Getter;
-import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.MutationQuery;
-import org.hibernate.query.Query;
 
 public class SessionFactory {
 
     @Getter
-    private final SessionFactory INSTANCE = new SessionFactory();
-    private final Configuration configuration = new Configuration();
-    private final String CREATE_PLAYERS_TABLE = """
+    private static final SessionFactory INSTANCE = new SessionFactory();
+    private static final Configuration configuration = new Configuration();
+    private static final String CREATE_PLAYERS_TABLE = """
                                                 CREATE TABLE IF NOT EXISTS Players (
                                                 ID INT PRIMARY KEY AUTO_INCREMENT,
                                                 Name VARCHAR(128) UNIQUE NOT NULL);
                                                 """;
-    private final String CREATE_MATCHES_TABLE = """
+    private static final String CREATE_MATCHES_TABLE = """
                                      CREATE TABLE IF NOT EXISTS Matches (
                                      ID INT PRIMARY KEY AUTO_INCREMENT,
                                      Player1 INT NOT NULL,
@@ -40,7 +37,7 @@ public class SessionFactory {
         }
     }
 
-    public Session getSessionFactory() {
+    public static Session getSessionFactory() {
         var sessionFactory = configuration.buildSessionFactory();
         return sessionFactory.openSession();
     }
