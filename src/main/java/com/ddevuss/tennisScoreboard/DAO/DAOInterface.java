@@ -1,17 +1,18 @@
 package com.ddevuss.tennisScoreboard.DAO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DAOInterface <Entity> {
 
-    void save(Entity entity);
+    Entity save(Entity entity);
 
-    Entity findById(Integer id);
+    Optional<Entity> findById(Integer id);
 
     List<Entity> findAll();
 
     void update(Entity entity);
 
-    void delete(Integer id);
+    boolean delete(Integer id);
 
 }
