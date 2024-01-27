@@ -6,12 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name = "PLAYERS")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Table(name = "Players")
+@Data
 @Builder(builderMethodName = "of")
 public class Player {
 
@@ -19,8 +15,8 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "NAME")
-    @NotNull
+    @Column(name = "Name")
     @NotBlank
+    @NotNull
     private String name;
 }
