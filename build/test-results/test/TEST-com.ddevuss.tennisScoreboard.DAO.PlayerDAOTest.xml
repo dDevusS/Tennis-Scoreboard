@@ -1,196 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2024-01-28T04:18:52" hostname="DDEVUSS" time="0.652">
+<testsuite name="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-01-28T05:12:26" hostname="DDEVUSS" time="0.518">
   <properties/>
-  <testcase name="saveMethodReturnsPlayerWithId()" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.143"/>
-  <testcase name="findById()" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.11"/>
-  <testcase name="getPlayersListWithSizeEqualedOne()" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.226"/>
-  <testcase name="updatedPlayerHasSameName()" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.092"/>
-  <testcase name="deleteByNonExistedIdPlayerReturnFalse()" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.035"/>
-  <testcase name="deleteExistedPlayerByIdReturnTrue()" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.04"/>
+  <testcase name="will be true if it returns same player with ID" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.159"/>
+  <testcase name="Compare size of players list with number of added players by previous test" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.257"/>
+  <testcase name="will be true if method returns updated name" classname="com.ddevuss.tennisScoreboard.DAO.PlayerDAOTest" time="0.099"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[янв. 27, 2024 11:18:50 PM org.hibernate.Version logVersion
+  <system-err><![CDATA[янв. 28, 2024 12:12:24 AM org.hibernate.Version logVersion
 INFO: HHH000412: Hibernate ORM core version 6.4.2.Final
-янв. 27, 2024 11:18:50 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:24 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:50 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:24 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:51 PM org.hibernate.validator.internal.util.Version <clinit>
+янв. 28, 2024 12:12:25 AM org.hibernate.validator.internal.util.Version <clinit>
 INFO: HV000001: Hibernate Validator 8.0.1.Final
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
 INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
 WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
 INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
 INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
 WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
-INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
-INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
-WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
-INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
-WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
-INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
-INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
-WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
-INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
-WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
-INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-янв. 27, 2024 11:18:52 PM org.hibernate.cache.internal.RegionFactoryInitiator initiateService
-INFO: HHH000026: Second-level cache disabled
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
-WARN: HHH10001002: Using built-in connection pool (not intended for production use)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001005: Loaded JDBC driver class: org.h2.Driver
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001012: Connecting with JDBC URL [jdbc:h2:mem:TennisMatches]
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001001: Connection properties: {}
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
-INFO: HHH10001003: Autocommit mode: false
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
-INFO: HHH10001115: Connection pool size: 20 (min=1)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
-WARN: HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-янв. 27, 2024 11:18:52 PM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+янв. 28, 2024 12:12:26 AM org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
 INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 ]]></system-err>
 </testsuite>
