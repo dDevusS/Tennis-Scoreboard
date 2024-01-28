@@ -9,11 +9,11 @@ public interface DAOInterface <Entity> {
 
     Entity save(Entity entity);
 
-    Player findById(Integer id);
+    Entity findById(Integer id);
 
     List<Entity> findAll();
 
-    boolean update(Entity entity);
+    Entity update(Entity entity);
 
     boolean delete(Integer id);
 

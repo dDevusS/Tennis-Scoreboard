@@ -43,16 +43,20 @@ public class PlayerDAO implements DAOInterface <Player>{
     }
 
     @Override
-    public boolean update(Player player) {
+    public Player update(Player player) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
+            var maybePlayer = session.get(Player.class, player.getId());
+
+            if (maybePlayer == null) {
+                return null;
+            }
+
             var updatedPlayer = session.merge(player);
-            boolean isUpdated = session.contains(updatedPlayer);
             session.getTransaction().commit();
 
-            return isUpdated;
+            return updatedPlayer;
         }
-
     }
 
     @Override
