@@ -1,62 +1,65 @@
 package com.ddevuss.tennisScoreboard.DAO;
 
-import com.ddevuss.tennisScoreboard.model.Player;
+import com.ddevuss.tennisScoreboard.model.Match;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class PlayerDAO implements DAOInterface <Player>{
+public class MatchDAO implements DAOInterface <Match> {
 
     private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
 
     @Override
-    public Player save(Player player) {
+    public Match save(Match match) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            session.persist(player);
+            session.persist(match);
             session.getTransaction().commit();
 
-            return player;
+            return match;
         }
     }
 
     @Override
-    public Player findById(Integer id) {
+    public Match findById(Integer id) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            var player = session.get(Player.class, id);
+            var match = session.get(Match.class, id);
             session.getTransaction().commit();
 
-            return player;
+            return match;
         }
     }
 
     @Override
-    public List<Player> findAll() {
+    public List<Match> findAll() {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            var query = session.createQuery("from Player", Player.class);
-            return query.getResultList();
+            var query = session.createQuery("from Matches", Match.class);
+            var resultList = query.getResultList();
+            session.getTransaction().commit();
+
+            return resultList;
         }
     }
 
     @Override
-    public Player update(Player player) {
+    public Match update(Match match) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            var maybePlayer = session.get(Player.class, player.getId());
+            var maybeMatch = session.get(Match.class, match.getId());
 
-            if (maybePlayer == null) {
+            if (maybeMatch == null) {
                 session.getTransaction().rollback();
                 return null;
             }
 
-            var updatedPlayer = session.merge(player);
+            var updatedMatch = session.merge(match);
             session.getTransaction().commit();
 
-            return updatedPlayer;
+            return updatedMatch;
         }
     }
 
@@ -64,16 +67,17 @@ public class PlayerDAO implements DAOInterface <Player>{
     public boolean delete(Integer id) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            var player = session.get(Player.class, id);
-            if (player == null) {
+            var match = session.get(Match.class, id);
+
+            if (match == null) {
                 session.getTransaction().rollback();
                 return false;
             }
-            else {
-                session.remove(player);
-                session.getTransaction().commit();
-                return true;
-            }
+
+            session.remove(match);
+            session.getTransaction().commit();
+
+            return true;
         }
     }
 }
