@@ -49,6 +49,7 @@ public class PlayerDAO implements DAOInterface <Player>{
             var maybePlayer = session.get(Player.class, player.getId());
 
             if (maybePlayer == null) {
+                session.getTransaction().rollback();
                 return null;
             }
 
