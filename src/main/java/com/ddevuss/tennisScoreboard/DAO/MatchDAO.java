@@ -37,7 +37,7 @@ public class MatchDAO implements DAOInterface <Match> {
     public List<Match> findAll() {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            var query = session.createQuery("from Matches", Match.class);
+            var query = session.createQuery("from Match", Match.class);
             var resultList = query.getResultList();
             session.getTransaction().commit();
 
