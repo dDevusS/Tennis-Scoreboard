@@ -7,7 +7,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "Players")
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder(builderMethodName = "of")
 public class Player {
 

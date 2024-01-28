@@ -4,10 +4,10 @@ import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
-public class SessionFactory {
+public class DatabaseConnector {
 
     @Getter
-    private static final SessionFactory INSTANCE = new SessionFactory();
+    private static final DatabaseConnector INSTANCE = new DatabaseConnector();
     private final Configuration configuration = new Configuration().configure();
     private static final String CREATE_PLAYERS_TABLE = "CREATE TABLE IF NOT EXISTS Players " +
                                                        "(ID INT PRIMARY KEY AUTO_INCREMENT," +
@@ -21,20 +21,22 @@ public class SessionFactory {
                                                        "FOREIGN KEY (Player2) REFERENCES Players(ID) ON DELETE CASCADE," +
                                                        "FOREIGN KEY (Winner) REFERENCES Players(ID) ON DELETE CASCADE);";
 
-    private SessionFactory() {
-        try (var session = getSessionFactory()) {
-            session.beginTransaction();
-
-            session.createNativeMutationQuery(CREATE_PLAYERS_TABLE).executeUpdate();
-            session.createNativeMutationQuery(CREATE_MATCHES_TABLE).executeUpdate();
-
-            session.getTransaction().commit();
-        }
+    private DatabaseConnector() {
+        createTable(CREATE_PLAYERS_TABLE);
+        createTable(CREATE_MATCHES_TABLE);
     }
 
-    public Session getSessionFactory() {
+    public Session getSession() {
         var sessionFactory = configuration.buildSessionFactory();
         return sessionFactory.openSession();
+    }
+
+    private void createTable(String sqlString) {
+        try (var session = getSession()) {
+            session.beginTransaction();
+            session.createNativeMutationQuery(sqlString).executeUpdate();
+            session.getTransaction().commit();
+        }
     }
 
 }
