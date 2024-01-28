@@ -2,11 +2,14 @@ package com.ddevuss.tennisScoreboard.DAO;
 
 import com.ddevuss.tennisScoreboard.model.Player;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Tag("DAOImplementedClass")
@@ -21,83 +24,77 @@ class PlayerDAOTest {
         player1 = Player.of().name("Alex").build();
         player2 = Player.of().name("Max").build();
         playerDAO = new PlayerDAO();
-        }
-
-    @Test
-    @Order(1)
-    @DisplayName("will be true if it returns same player with ID")
-    void saveMethodReturnsSamePlayerWithId() {
-        var newPlayer = playerDAO.save(player1);
-        playerDAO.save(player2);
-
-        assertThat(newPlayer.getId()).isNotZero();
-        assertThat(newPlayer).isEqualTo(player1);
     }
 
-    @Nested
-    @Order(2)
-    class FindByIdTest {
+    static Stream<Player> providePlayers() {
+        return Stream.of(player1, player2);
+    }
 
-        @Test
-        @DisplayName("will be true if player exists with this ID")
-        void returnPlayerClassWithCorrectId() {
-            Integer correctId = 1;
-            var player = playerDAO.findById(correctId);
+    @ParameterizedTest
+    @Order(1)
+    @MethodSource("providePlayers")
+    @DisplayName("will be true if it returns same player with ID")
+    void saveMethodReturnsSamePlayerWithId(Player player) {
+        var newPlayer = playerDAO.save(player);
+        assertThat(newPlayer.getId()).isNotZero();
+        assertThat(newPlayer).isEqualTo(player);
+    }
+
+    @ParameterizedTest
+    @Order(2)
+    @ValueSource(ints = {1, 1000})
+    @DisplayName("will be true if player exists with this ID")
+    void returnPlayerClassWithCorrectId(int id) {
+        if (id == 1) {
+            var player = playerDAO.findById(id);
             assertThat(player).isInstanceOf(Player.class);
         }
-
-        @Test
-        @DisplayName("will be false if player doesn't exist with this ID")
-        void returnNullWithIncorrectId() {
-            Integer incorrectId = 100;
-            var mustBeNull = playerDAO.findById(incorrectId);
+        else {
+            var mustBeNull = playerDAO.findById(id);
             assertThat(mustBeNull).isNull();
         }
-
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     @DisplayName("Compare size of players list with number of added players by previous test")
     void getPlayersListWithSizeEqualedOne() {
         var players = playerDAO.findAll();
         assertThat(players).size().isEqualTo(2);
     }
 
-    @Test
+    @ParameterizedTest
+    @Order(3)
+    @MethodSource("getArgumentsForUpdateTest")
+    @DisplayName("will be true if method updated existed player's name")
+    void updatedExistedPlayerHasSameName(String name, Player player) {
+        player.setName(name);
+        if (!"NonExisted".equalsIgnoreCase(name)) {
+            assertThat(playerDAO.update(player)).usingRecursiveComparison().isEqualTo(player);
+        }
+        else {
+            assertThat(playerDAO.update(player)).isNull();
+        }
+    }
+
+    static Stream<Arguments> getArgumentsForUpdateTest() {
+        return Stream.of(
+                Arguments.of("Sergey", player1),
+                Arguments.of("Ivan", player2),
+                Arguments.of("NonExisted", Player.of().id(1000).name("Unknown").build())
+        );
+    }
+
+    @ParameterizedTest
     @Order(4)
-    @DisplayName("will be true if method returns updated name")
-    void updatedPlayerHasSameName() {
-        String newName = "Sergey";
-        player1.setName(newName);
-
-        boolean isUpdate = playerDAO.update(player1);
-        assertThat(isUpdate).isTrue();
-
-        var updatedPlayer = playerDAO.findById(player1.getId());
-
-        assertThat(updatedPlayer.getName()).isEqualTo(newName);
-    }
-
-    @Nested
-    @Order(5)
-    class DeleteTest {
-
-        @Test
-        @DisplayName("will be false if player with this ID doesn't exist in the DB")
-        void deleteByNonExistedIdPlayerReturnFalse() {
-            Integer unrealId = 1000;
-            boolean isDeleted = playerDAO.delete(unrealId);
-            assertThat(isDeleted).isFalse();
+    @ValueSource(ints = {1, 1000})
+    @DisplayName("will be true if player with this ID exists in the DB")
+    void deleteByNonExistedIdPlayerReturnFalse(int id) {
+        if (id == 1) {
+            assertThat(playerDAO.delete(id)).isTrue();
         }
-
-        @Test
-        @DisplayName("will be true if player with this ID exists in the DB")
-        void deleteExistedPlayerByIdReturnTrue() {
-            boolean isDeleted = playerDAO.delete(player2.getId());
-            assertThat(isDeleted).isTrue();
+        else {
+            assertThat(playerDAO.delete(id)).isFalse();
         }
-
     }
-
 }
