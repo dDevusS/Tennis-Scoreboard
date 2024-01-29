@@ -2,12 +2,11 @@ package com.ddevuss.tennisScoreboard.DAO;
 
 import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import jakarta.persistence.NonUniqueResultException;
 
 import java.util.List;
 
-public class PlayerDAO implements DAOInterface <Player>{
+public class PlayerDAO implements DAOInterface <Player>, IFindByName<Player> {
 
     private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
 
@@ -73,6 +72,26 @@ public class PlayerDAO implements DAOInterface <Player>{
                 session.remove(player);
                 session.getTransaction().commit();
                 return true;
+            }
+        }
+    }
+
+    @Override
+    public Player findByName(String name) {
+        try (var session = databaseConnector.getSession()) {
+            session.beginTransaction();
+            var query
+                    = session.createQuery("from Player where name = :name", Player.class);
+            query.setParameter("name", name);
+
+            try {
+                return query.getSingleResult();
+            }
+            catch (NonUniqueResultException exception) {
+                return null;
+            }
+            finally {
+                session.getTransaction().commit();
             }
         }
     }
