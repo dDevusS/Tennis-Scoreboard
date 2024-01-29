@@ -31,9 +31,7 @@ class MatchDAOTest {
     @BeforeAll
     static void createFieldsAndAddPlayersIntoDB() {
         playerDAO.save(player1);
-        playerDAO.save(player2);
         playerDAO.save(player3);
-        playerDAO.save(player4);
 
         match1 = Match.of().player1(player1).player2(player2).winner(player1).build();
         match2 = Match.of().player1(player2).player2(player1).winner(player2).build();

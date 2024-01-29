@@ -2,6 +2,7 @@ package com.ddevuss.tennisScoreboard.DAO;
 
 import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 
 import java.util.List;
@@ -87,7 +88,7 @@ public class PlayerDAO implements DAOInterface <Player>, IFindByName<Player> {
             try {
                 return query.getSingleResult();
             }
-            catch (NonUniqueResultException exception) {
+            catch (NoResultException exception) {
                 return null;
             }
             finally {

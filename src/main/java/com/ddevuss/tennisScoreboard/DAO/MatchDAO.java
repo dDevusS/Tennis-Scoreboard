@@ -1,10 +1,12 @@
 package com.ddevuss.tennisScoreboard.DAO;
 
 import com.ddevuss.tennisScoreboard.model.Match;
+import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
+import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDAO implements DAOInterface <Match> {
@@ -15,10 +17,30 @@ public class MatchDAO implements DAOInterface <Match> {
     public Match save(Match match) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
+            addPlayersIfNotExist(session, match);
             session.persist(match);
             session.getTransaction().commit();
 
             return match;
+        }
+    }
+
+    private void addPlayersIfNotExist(Session session, Match match) {
+        List<Player> players = new ArrayList<>();
+        players.add(match.getPlayer1());
+        players.add(match.getPlayer2());
+
+        for (Player player: players) {
+            var query
+                    = session.createQuery("from Player where name = :name", Player.class);
+            query.setParameter("name", player.getName());
+
+            try {
+                query.getSingleResult();
+            }
+            catch (NoResultException exception) {
+                session.persist(player);
+            }
         }
     }
 
@@ -56,6 +78,7 @@ public class MatchDAO implements DAOInterface <Match> {
                 return null;
             }
 
+            addPlayersIfNotExist(session, match);
             var updatedMatch = session.merge(match);
             session.getTransaction().commit();
 
