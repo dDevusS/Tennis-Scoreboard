@@ -17,13 +17,12 @@ class PlayerDAOTest {
 
     private static Player player1;
     private static Player player2;
-    private static PlayerDAO playerDAO;
+    private final static PlayerDAO playerDAO = new PlayerDAO();
 
     @BeforeAll
-    static void createDB() {
+    static void createFields() {
         player1 = Player.of().name("Alex").build();
         player2 = Player.of().name("Max").build();
-        playerDAO = new PlayerDAO();
     }
 
     static Stream<Player> providePlayers() {
@@ -35,16 +34,16 @@ class PlayerDAOTest {
     @MethodSource("providePlayers")
     @DisplayName("will be true if it returns same player with ID")
     void saveMethodReturnsSamePlayerWithId(Player player) {
-        var newPlayer = playerDAO.save(player);
-        assertThat(newPlayer.getId()).isNotZero();
-        assertThat(newPlayer).isEqualTo(player);
+        var savedPlayer = playerDAO.save(player);
+        assertThat(savedPlayer.getId()).isNotZero();
+        assertThat(savedPlayer).isEqualTo(player);
     }
 
     @ParameterizedTest
     @Order(2)
     @ValueSource(ints = {1, 1000})
     @DisplayName("will be true if player exists with this ID")
-    void returnPlayerClassWithCorrectId(int id) {
+    void findPlayerClassWithCorrectId(int id) {
         if (id == 1) {
             var player = playerDAO.findById(id);
             assertThat(player).isInstanceOf(Player.class);
@@ -57,7 +56,7 @@ class PlayerDAOTest {
 
     @Test
     @Order(2)
-    @DisplayName("Compare size of players list with number of added players by previous test")
+    @DisplayName("compare size of players list with number of added players by previous test")
     void getPlayersListWithSizeEqualedOne() {
         var players = playerDAO.findAll();
         assertThat(players).size().isEqualTo(2);
@@ -67,7 +66,7 @@ class PlayerDAOTest {
     @Order(3)
     @MethodSource("getArgumentsForUpdateTest")
     @DisplayName("will be true if method updated existed player's name")
-    void updatedExistedPlayerHasSameName(String name, Player player) {
+    void updatedExistedPlayerHasSameFields(String name, Player player) {
         player.setName(name);
         if (!"NonExisted".equalsIgnoreCase(name)) {
             assertThat(playerDAO.update(player)).usingRecursiveComparison().isEqualTo(player);
@@ -89,7 +88,7 @@ class PlayerDAOTest {
     @Order(4)
     @ValueSource(ints = {1, 1000})
     @DisplayName("will be true if player with this ID exists in the DB")
-    void deleteByNonExistedIdPlayerReturnFalse(int id) {
+    void deleteByExistedIdPlayerReturnTrue(int id) {
         if (id == 1) {
             assertThat(playerDAO.delete(id)).isTrue();
         }
