@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name = "Players")
+@Table(name = "Players", indexes = @Index(columnList = "Name", name = "ind_name", unique = true))
 @Setter
 @Getter
 @NoArgsConstructor
