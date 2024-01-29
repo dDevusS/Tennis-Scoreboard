@@ -20,7 +20,7 @@ public class DatabaseConnector {
                                                        "FOREIGN KEY (Player1) REFERENCES Players(ID) ON DELETE CASCADE," +
                                                        "FOREIGN KEY (Player2) REFERENCES Players(ID) ON DELETE CASCADE," +
                                                        "FOREIGN KEY (Winner) REFERENCES Players(ID) ON DELETE CASCADE);";
-    private static final String CREATE_INDEX_FOR_PLAYERS_NAME = "CREATE INDEX ind_name ON Players (Name);";
+    private static final String CREATE_INDEX_FOR_PLAYERS_NAME = "CREATE INDEX IF NOT EXISTS ind_name ON Players (Name);";
 
     private DatabaseConnector() {
         createSQLRequest(CREATE_PLAYERS_TABLE);
