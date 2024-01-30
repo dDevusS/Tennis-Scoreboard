@@ -18,7 +18,7 @@ class PlayerDAOTest {
 
     private static Player player1;
     private static Player player2;
-    private final static PlayerDAO playerDAO = new PlayerDAO();
+    private final static PlayerDAO playerDAO = PlayerDAO.getInstance();
 
     @BeforeAll
     static void createFieldsAndPrepareDB() {

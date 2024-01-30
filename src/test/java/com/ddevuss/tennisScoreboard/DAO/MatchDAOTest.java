@@ -25,8 +25,8 @@ class MatchDAOTest {
     private final static Player player2 = Player.of().name("Boris").build();
     private final static Player player3 = Player.of().name("Oleg").build();
     private final static Player player4 = Player.of().name("Fedor").build();
-    private final static MatchDAO matchDAO = new MatchDAO();
-    private final static PlayerDAO playerDAO = new PlayerDAO();
+    private final static MatchDAO matchDAO = MatchDAO.getInstance();
+    private final static PlayerDAO playerDAO = PlayerDAO.getInstance();
 
     @BeforeAll
     static void createFieldsAndAddPlayersIntoDB() {
