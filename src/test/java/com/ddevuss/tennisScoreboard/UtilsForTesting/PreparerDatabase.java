@@ -1,4 +1,4 @@
-package com.ddevuss.tennisScoreboard.testUtils;
+package com.ddevuss.tennisScoreboard.UtilsForTesting;
 
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
 

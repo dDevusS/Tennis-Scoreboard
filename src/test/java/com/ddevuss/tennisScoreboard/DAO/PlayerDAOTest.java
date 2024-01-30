@@ -1,11 +1,10 @@
 package com.ddevuss.tennisScoreboard.DAO;
 
 import com.ddevuss.tennisScoreboard.model.Player;
-import com.ddevuss.tennisScoreboard.testUtils.PreparerDatabase;
+import com.ddevuss.tennisScoreboard.UtilsForTesting.PreparerDatabase;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -91,6 +90,23 @@ class PlayerDAOTest {
         else {
             assertThat(playerDAO.delete(id)).isFalse();
         }
+    }
+
+    @Test
+    @DisplayName("will be true if method returns existed player from the DB")
+    void registerPlayerReturnExistedPlayer() {
+        var player = playerDAO.registerPlayerByName(player1.getName());
+        assertThat(player.getId()).isNotZero();
+        assertThat(player.getName()).isEqualTo(player1.getName());
+    }
+
+    @Test
+    @DisplayName("if player doesn't exist method creates and returns new player with this name")
+    void registerPlayerReturnCreatedPlayerIfNotExist() {
+        String newPlayerName = "NewPlayer";
+        var newPlayer = playerDAO.registerPlayerByName(newPlayerName);
+        assertThat(newPlayer.getId()).isNotZero();
+        assertThat(newPlayer.getName()).isEqualTo(newPlayerName);
     }
 
     @AfterAll

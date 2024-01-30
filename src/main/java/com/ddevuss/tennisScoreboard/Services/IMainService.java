@@ -14,6 +14,6 @@ public interface IMainService {
     Map<UUID, CurrentMatch> getCurrentMatches();
     void plusPoint(CurrentMatch currentMatch);
     List<Match> getAllEndedMatches();
-    List<Match> getEndedMatches(Player player);
+    List<Match> getEndedMatches(String playerName);
 
 }

@@ -10,7 +10,7 @@ import org.hibernate.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchDAO implements DAOInterface <Match>, IFindAllByPlayer {
+public class MatchDAO implements DAOInterface <Match>, IFindAllByPlayerName {
 
     private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
     private static final MatchDAO INSTANCE = new MatchDAO();
@@ -112,23 +112,31 @@ public class MatchDAO implements DAOInterface <Match>, IFindAllByPlayer {
         }
     }
 
-    //TODO: Create test
     @Override
-    public List<Match> findAllByPlayer(Player player) {
+    public List<Match> findAllByPlayerName(String playerName) {
         try (var session = databaseConnector.getSession()) {
-            String sqlRequest = "SELECT Matches.ID, Player1, Player2, Winner FROM Matches\n" +
-                    "JOIN Players P1 ON Matches.Player1 = P1.ID\n" +
-                    "JOIN Players P2 ON Matches.Player2 = P2.ID\n" +
-                    "WHERE P1.Name = :name OR P2.Name = :name;";
+            String sqlRequest1 = "FROM Player WHERE name = :name";
+            String sqlRequest2 = "FROM Match WHERE player1 = :player OR player2 = :player";
 
             session.beginTransaction();
-            var query = session.createQuery(sqlRequest, Match.class);
-            query.setParameter("name", player.getName());
+            var query = session.createQuery(sqlRequest1, Player.class);
+            query.setParameter("name", playerName);
 
-            var resultList = query.getResultList();
-            session.getTransaction().commit();
+            List<Match> matches = new ArrayList<>();
+            try {
+                var player = query.getSingleResult();
+                var query1 = session.createQuery(sqlRequest2, Match.class);
+                query1.setParameter("player", player);
+                matches = query1.getResultList();
 
-            return resultList;
+                return matches;
+            }
+            catch (NoResultException exception) {
+                return matches;
+            }
+            finally {
+                session.getTransaction().commit();
+            }
         }
     }
 }

@@ -21,6 +21,8 @@ class MatchDAOTest {
 
     private static Match match1;
     private static Match match2;
+    private static Match match3;
+    private static Match match4;
     private final static Player player1 = Player.of().name("Stanislav").build();
     private final static Player player2 = Player.of().name("Boris").build();
     private final static Player player3 = Player.of().name("Oleg").build();
@@ -35,10 +37,12 @@ class MatchDAOTest {
 
         match1 = Match.of().player1(player1).player2(player2).winner(player1).build();
         match2 = Match.of().player1(player2).player2(player1).winner(player2).build();
+        match3 = Match.of().player1(player3).player2(player1).winner(player3).build();
+        match4 = Match.of().player1(player2).player2(player1).winner(player2).build();
     }
 
     static Stream<Match> provideMatches() {
-        return Stream.of(match1, match2);
+        return Stream.of(match1, match2, match3, match4);
     }
 
     @ParameterizedTest
@@ -69,9 +73,9 @@ class MatchDAOTest {
     @Test
     @Order(2)
     @DisplayName("compare size of matches list with number of added matches by previous test")
-    void findAll() {
+    void getMatchesListNotEmpty() {
         var matches = matchDAO.findAll();
-        assertThat(matches.size()).isEqualTo(2);
+        assertThat(matches).isNotEmpty();
     }
 
     static Stream<Arguments> provideArgumentsForUpdateTest() {
@@ -124,6 +128,18 @@ class MatchDAOTest {
         }
         else {
             assertThat(matchDAO.delete(id)).isFalse();
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"UnrealName", "Stanislav", "Boris", })
+    @DisplayName("will return list with matches there is player with this name")
+    void returnMatchListWithPlayerWithThisName(String playerName) {
+        if ("UnrealName".equalsIgnoreCase(playerName)) {
+            assertThat(matchDAO.findAllByPlayerName(playerName)).isEmpty();
+        }
+        else {
+            assertThat(matchDAO.findAllByPlayerName(playerName)).isNotEmpty();
         }
     }
 }

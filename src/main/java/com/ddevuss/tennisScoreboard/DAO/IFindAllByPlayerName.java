@@ -5,7 +5,7 @@ import com.ddevuss.tennisScoreboard.model.Player;
 
 import java.util.List;
 
-public interface IFindAllByPlayer {
+public interface IFindAllByPlayerName {
 
-    List<Match> findAllByPlayer(Player player);
+    List<Match> findAllByPlayerName(String playerName);
 }

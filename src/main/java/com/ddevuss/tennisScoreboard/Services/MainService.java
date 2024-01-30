@@ -44,7 +44,7 @@ public class MainService implements IMainService {
     }
 
     @Override
-    public List<Match> getEndedMatches(Player player) {
-        return MATCH_DAO.findAllByPlayer(player);
+    public List<Match> getEndedMatches(String playerName) {
+        return MATCH_DAO.findAllByPlayerName(playerName);
     }
 }

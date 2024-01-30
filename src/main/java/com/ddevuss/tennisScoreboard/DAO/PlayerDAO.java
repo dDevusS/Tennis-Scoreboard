@@ -83,7 +83,6 @@ public class PlayerDAO implements DAOInterface <Player>, IRegistrationPlayerByNa
         }
     }
 
-    //TODO: Create test
     @Override
     public Player registerPlayerByName(String name) {
         try (var session = databaseConnector.getSession()) {
