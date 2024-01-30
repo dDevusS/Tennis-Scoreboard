@@ -3,13 +3,19 @@ package com.ddevuss.tennisScoreboard.DAO;
 import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.NonUniqueResultException;
 
 import java.util.List;
 
-public class PlayerDAO implements DAOInterface <Player>, IFindByName<Player> {
+public class PlayerDAO implements DAOInterface <Player>, IRegistrationPlayerByName {
 
     private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
+    private final static PlayerDAO INSTANCE = new PlayerDAO();
+
+    private PlayerDAO() {}
+
+    public static PlayerDAO getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public Player save(Player player) {
@@ -77,8 +83,9 @@ public class PlayerDAO implements DAOInterface <Player>, IFindByName<Player> {
         }
     }
 
+    //TODO: Create test
     @Override
-    public Player findByName(String name) {
+    public Player registerPlayerByName(String name) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
             var query
@@ -89,7 +96,9 @@ public class PlayerDAO implements DAOInterface <Player>, IFindByName<Player> {
                 return query.getSingleResult();
             }
             catch (NoResultException exception) {
-                return null;
+                Player player = Player.of().name(name).build();
+                session.persist(player);
+                return player;
             }
             finally {
                 session.getTransaction().commit();

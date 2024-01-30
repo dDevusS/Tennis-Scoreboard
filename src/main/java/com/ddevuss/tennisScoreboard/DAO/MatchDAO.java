@@ -5,13 +5,21 @@ import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchDAO implements DAOInterface <Match> {
+public class MatchDAO implements DAOInterface <Match>, IFindAllByPlayer {
 
     private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
+    private static final MatchDAO INSTANCE = new MatchDAO();
+
+    private MatchDAO() {}
+
+    public static MatchDAO getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public Match save(Match match) {
@@ -101,6 +109,26 @@ public class MatchDAO implements DAOInterface <Match> {
             session.getTransaction().commit();
 
             return true;
+        }
+    }
+
+    //TODO: Create test
+    @Override
+    public List<Match> findAllByPlayer(Player player) {
+        try (var session = databaseConnector.getSession()) {
+            String sqlRequest = "SELECT Matches.ID, Player1, Player2, Winner FROM Matches\n" +
+                    "JOIN Players P1 ON Matches.Player1 = P1.ID\n" +
+                    "JOIN Players P2 ON Matches.Player2 = P2.ID\n" +
+                    "WHERE P1.Name = :name OR P2.Name = :name;";
+
+            session.beginTransaction();
+            var query = session.createQuery(sqlRequest, Match.class);
+            query.setParameter("name", player.getName());
+
+            var resultList = query.getResultList();
+            session.getTransaction().commit();
+
+            return resultList;
         }
     }
 }
