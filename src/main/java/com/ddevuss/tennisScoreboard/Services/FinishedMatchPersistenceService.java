@@ -9,7 +9,7 @@ import lombok.Getter;
 public class FinishedMatchPersistenceService {
 
     private static final MatchDAO MATCH_DAO = MatchDAO.getInstance();
-    private static final MainService MAIN_SERVICE = MainService.getINSTANCE();
+    private static final MainMatchesService MAIN_SERVICE = MainMatchesService.getINSTANCE();
     @Getter
     private static final FinishedMatchPersistenceService INSTANCE = new FinishedMatchPersistenceService();
 

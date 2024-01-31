@@ -6,20 +6,19 @@ import lombok.Getter;
 
 import java.util.UUID;
 
-public class ScoreCalculationService implements IScoreService {
+public class ScoreCalculationService {
 
     @Getter
     private static final ScoreCalculationService INSTANCE = new ScoreCalculationService();
-    private final MainService MAIN_SERVICE = MainService.getINSTANCE();
+    private final MainMatchesService mainMatchesService = MainMatchesService.getINSTANCE();
     private final FinishedMatchPersistenceService finishedMatchPersistenceService
             = FinishedMatchPersistenceService.getINSTANCE();
 
     private ScoreCalculationService() {
     }
 
-    @Override
     public void plusPointToPlayer(UUID uuid, int playerId) {
-        CurrentMatch currentMatch = MAIN_SERVICE.getCurrentMatches().get(uuid);
+        CurrentMatch currentMatch = mainMatchesService.getCurrentMatches().get(uuid);
         plusPointToActivePlayer(currentMatch, playerId);
         checkEndOfSet(currentMatch);
     }
@@ -32,30 +31,18 @@ public class ScoreCalculationService implements IScoreService {
                 && Math.abs(activePlayer1.getScore() - activePlayer2.getScore()) >= 8) {
 
             if (activePlayer1.getScore() - activePlayer2.getScore() > 0) {
-                activePlayer1.setScore(0);
-                activePlayer2.setScore(0);
-                int set = activePlayer1.getSet() + 1;
-                activePlayer1.setSet(set);
+                resetScoreAndPlusSet(activePlayer1, activePlayer2);
             }
             else {
-                activePlayer1.setScore(0);
-                activePlayer2.setScore(0);
-                int set = activePlayer2.getSet() + 1;
-                activePlayer2.setSet(set);
+                resetScoreAndPlusSet(activePlayer2, activePlayer1);
             }
         }
         else {
             if (activePlayer1.getScore() / 4 >= 6 && activePlayer1.getScore() / 4 - activePlayer2.getScore() / 4 >= 2) {
-                activePlayer1.setScore(0);
-                activePlayer2.setScore(0);
-                int set = activePlayer1.getSet() + 1;
-                activePlayer1.setSet(set);
+                resetScoreAndPlusSet(activePlayer1, activePlayer2);
             }
             else if (activePlayer2.getScore() / 4 >= 6 && activePlayer2.getScore() / 4 - activePlayer1.getScore() / 4 >= 2) {
-                activePlayer1.setScore(0);
-                activePlayer2.setScore(0);
-                int set = activePlayer2.getSet() + 1;
-                activePlayer2.setSet(set);
+                resetScoreAndPlusSet(activePlayer2, activePlayer1);
             }
             else if (activePlayer1.getScore() >= 24 || activePlayer2.getScore() >= 24) {
                 currentMatch.setTieBreak(true);
@@ -67,6 +54,7 @@ public class ScoreCalculationService implements IScoreService {
 
     private void plusPointToActivePlayer(CurrentMatch currentMatch, int playerId) {
         int victoryPoint = 1;
+
         if (currentMatch.isTieBreak()) {
             victoryPoint = 4;
         }
@@ -86,5 +74,12 @@ public class ScoreCalculationService implements IScoreService {
         if (countOfSets == 3) {
             finishedMatchPersistenceService.finishCurrentMatch(currentMatch);
         }
+    }
+
+    private void resetScoreAndPlusSet(ActivePlayer wonPlayer, ActivePlayer beatenPlayer) {
+        wonPlayer.setScore(0);
+        beatenPlayer.setScore(0);
+        int set = wonPlayer.getSet() + 1;
+        wonPlayer.setSet(set);
     }
 }
