@@ -5,16 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder(builderMethodName = "of")
-public class CurrentMatch {
+public class ActivePlayer {
 
-    private UUID uuid;
-    private ActivePlayer player1;
-    private ActivePlayer player2;
-    private boolean isTieBreak;
+    private int id;
+    private String name;
+    private int score;
+    private int set;
+
 }
