@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public interface IMainService {
+public interface IMainMatchesService {
 
-    void startNewMatch(CurrentMatch match);
+    void createNewMatch(CurrentMatch match);
 
     Map<UUID, CurrentMatch> getCurrentMatches();
 

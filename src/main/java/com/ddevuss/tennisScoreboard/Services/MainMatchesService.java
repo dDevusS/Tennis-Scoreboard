@@ -13,34 +13,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class MainService implements IMainService {
+public class MainMatchesService implements IMainMatchesService {
 
-    private final static PlayerDAO PLAYER_DAO = PlayerDAO.getInstance();
-    private final static MatchDAO MATCH_DAO = MatchDAO.getInstance();
+    private static final PlayerDAO PLAYER_DAO = PlayerDAO.getInstance();
+    private static final MatchDAO MATCH_DAO = MatchDAO.getInstance();
     @Getter
-    private final static MainService INSTANCE = new MainService();
-    private static Map<UUID, CurrentMatch> currentMatches = new HashMap<>();
+    private static final MainMatchesService INSTANCE = new MainMatchesService();
+    @Getter
+    private final Map<UUID, CurrentMatch> currentMatches = new HashMap<>();
 
-    private MainService() {
+    private MainMatchesService() {
     }
 
     @Override
-    public void startNewMatch(CurrentMatch currentMatch) {
+    public void createNewMatch(CurrentMatch currentMatch) {
         Player player1 = PLAYER_DAO.registerPlayerByName(currentMatch.getPlayer1().getName());
         Player player2 = PLAYER_DAO.registerPlayerByName(currentMatch.getPlayer2().getName());
-        //TODO: реализовать конвертатор
-        ActivePlayer activePlayer1 = ActivePlayer.of().id(player1.getId())
-                .name(player1.getName())
-                .score(0)
-                .set(0)
-                .build();
 
-        ActivePlayer activePlayer2 = ActivePlayer.of().id(player2.getId())
-                .name(player2.getName())
-                .score(0)
-                .set(1)
-                .build();
-
+        ActivePlayer activePlayer1 = getNewActivePlayer(player1);
+        ActivePlayer activePlayer2 = getNewActivePlayer(player2);
         var randomUUID = UUID.randomUUID();
 
         currentMatch = CurrentMatch.of().uuid(randomUUID)
@@ -53,11 +44,6 @@ public class MainService implements IMainService {
     }
 
     @Override
-    public Map<UUID, CurrentMatch> getCurrentMatches() {
-        return currentMatches;
-    }
-
-    @Override
     public List<Match> getAllEndedMatches() {
         return MATCH_DAO.findAll();
     }
@@ -65,5 +51,9 @@ public class MainService implements IMainService {
     @Override
     public List<Match> getEndedMatches(String playerName) {
         return MATCH_DAO.findAllByPlayerName(playerName);
+    }
+
+    private ActivePlayer getNewActivePlayer (Player player) {
+        return ActivePlayer.of().id(player.getId()).name(player.getName()).score(0).set(0).build();
     }
 }
