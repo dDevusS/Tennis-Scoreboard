@@ -5,17 +5,17 @@ import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchDAO implements DAOInterface <Match>, IFindAllByPlayerName {
+public class MatchDAO implements DAOInterface<Match>, IFindAllByPlayerName {
 
-    private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
     private static final MatchDAO INSTANCE = new MatchDAO();
+    private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
 
-    private MatchDAO() {}
+    private MatchDAO() {
+    }
 
     public static MatchDAO getInstance() {
         return INSTANCE;
@@ -38,7 +38,7 @@ public class MatchDAO implements DAOInterface <Match>, IFindAllByPlayerName {
         players.add(match.getPlayer1());
         players.add(match.getPlayer2());
 
-        for (Player player: players) {
+        for (Player player : players) {
             var query
                     = session.createQuery("from Player where name = :name", Player.class);
             query.setParameter("name", player.getName());

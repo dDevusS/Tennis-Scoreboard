@@ -6,12 +6,13 @@ import jakarta.persistence.NoResultException;
 
 import java.util.List;
 
-public class PlayerDAO implements DAOInterface <Player>, IRegistrationPlayerByName {
+public class PlayerDAO implements DAOInterface<Player>, IRegistrationPlayerByName {
 
-    private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
     private final static PlayerDAO INSTANCE = new PlayerDAO();
+    private final DatabaseConnector databaseConnector = DatabaseConnector.getINSTANCE();
 
-    private PlayerDAO() {}
+    private PlayerDAO() {
+    }
 
     public static PlayerDAO getInstance() {
         return INSTANCE;
