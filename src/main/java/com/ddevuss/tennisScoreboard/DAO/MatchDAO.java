@@ -25,7 +25,11 @@ public class MatchDAO implements DAOInterface<Match>, IFindAllByPlayerName {
     public Match save(Match match) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-            addPlayersIfNotExist(session, match);
+
+            //TODO: решить что делать с этим методом
+
+//            addPlayersIfNotExist(session, match);
+
             session.persist(match);
             session.getTransaction().commit();
 
