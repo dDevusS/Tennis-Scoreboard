@@ -1,15 +1,13 @@
 package com.ddevuss.tennisScoreboard.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder(builderMethodName = "of")
 public class CurrentMatch {
 
@@ -17,4 +15,6 @@ public class CurrentMatch {
     private ActivePlayer player1;
     private ActivePlayer player2;
     private boolean isTieBreak;
+    private boolean isDeuce;
+
 }
