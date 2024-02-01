@@ -68,47 +68,40 @@ public class MatchesServicesTest {
         assertSetsForPlayers(currentMatch, 0);
     }
 
-    //TODO: разделить на 2 теста
-
     @Test
-    @DisplayName("will increase sets score after coming 6-4 score and 7-5 score")
-    void checkingEndOfSetTest() {
-        UUID matchUUID1 = MAIN_MATCHES_SERVICE.getUuidList().get(0);
-        CurrentMatch currentMatch1 = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID1);
-        UUID matchUUID2 = MAIN_MATCHES_SERVICE.getUuidList().get(1);
-        CurrentMatch currentMatch2 = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID2);
+    @DisplayName("will increase sets score after coming 6-4 games")
+    void checkingEndOfSetWithSixFourGamesTest() {
+        UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
+        CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
-        currentMatch1.getPlayer1().setGame(5);
-        currentMatch1.getPlayer2().setGame(4);
-
+        currentMatch.getPlayer1().setGame(5);
+        currentMatch.getPlayer2().setGame(4);
 
         for (int playCounter = 0; playCounter < 4; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID1, currentMatch1.getPlayer1().getId());
+            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
-        assertThat(currentMatch1.getPlayer1().getSet()).isEqualTo(1);
-        assertThat(currentMatch1.getPlayer2().getSet()).isZero();
-        assertThat(currentMatch1.getPlayer1().getScore()).isZero();
-        assertThat(currentMatch1.getPlayer2().getScore()).isZero();
-        assertThat(currentMatch1.getPlayer2().getGame()).isZero();
-        assertThat(currentMatch1.getPlayer1().getGame()).isZero();
+        assertScoreForPlayers(currentMatch, 0);
+        assertGamesForPlayers(currentMatch, 0);
+        assertSetsForPlayers(currentMatch, 1, 0);
+    }
 
-        currentMatch2.getPlayer1().setGame(5);
-        currentMatch2.getPlayer2().setGame(5);
+    @Test
+    @DisplayName("will increase sets score after coming 7-5 games")
+    void checkingEndOfSetWithSevenFiveGamesTest() {
+        UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
+        CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
+
+        currentMatch.getPlayer1().setGame(5);
+        currentMatch.getPlayer2().setGame(5);
 
         for (int playCounter = 0; playCounter < 8; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID2, currentMatch2.getPlayer1().getId());
+            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
-        assertThat(currentMatch2.getPlayer1().getSet()).isEqualTo(1);
-        assertThat(currentMatch2.getPlayer2().getSet()).isZero();
-        assertThat(currentMatch2.getPlayer1().getScore()).isZero();
-        assertThat(currentMatch2.getPlayer2().getScore()).isZero();
-        assertThat(currentMatch2.getPlayer2().getGame()).isZero();
-        assertThat(currentMatch2.getPlayer1().getGame()).isZero();
-
-        currentMatch1.getPlayer1().setSet(0);
-        currentMatch2.getPlayer1().setSet(0);
+        assertScoreForPlayers(currentMatch, 0);
+        assertGamesForPlayers(currentMatch, 0);
+        assertSetsForPlayers(currentMatch, 1, 0);
     }
 
     @Test
