@@ -8,7 +8,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.*;
 
 @Tag("CalculationScoreTest")
-public class MatchesServicesTest {
+public class CalculationScoreServiceTest {
 
     private static final CalculationScoreService CALCULATION_SCORE_SERVICE = CalculationScoreService.getINSTANCE();
     private static final MainMatchesService MAIN_MATCHES_SERVICE = MainMatchesService.getINSTANCE();
