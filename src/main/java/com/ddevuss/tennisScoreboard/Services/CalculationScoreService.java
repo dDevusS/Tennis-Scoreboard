@@ -87,13 +87,6 @@ public class CalculationScoreService {
         }
         else if (activePlayer1.getScore() == fortyPoints && activePlayer2.getScore() == fortyPoints) {
             currentMatch.setDeuce(true);
-
-            if (activePlayer1.getId() == playerId) {
-                activePlayer1.setAdvantage(true);
-            }
-            else {
-                activePlayer2.setAdvantage(true);
-            }
         }
     }
 
@@ -152,4 +145,5 @@ public class CalculationScoreService {
         wonPlayer.setAdvantage(false);
         beatenPlayer.setScore(0);
     }
+
 }

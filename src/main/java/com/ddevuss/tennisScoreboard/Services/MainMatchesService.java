@@ -38,7 +38,8 @@ public class MainMatchesService implements IMainMatchesService {
 
         getUuidList().add(randomUUID);
 
-        CurrentMatch currentMatch = CurrentMatch.of().uuid(randomUUID)
+        CurrentMatch currentMatch = CurrentMatch.of()
+                .uuid(randomUUID)
                 .player1(activePlayer1)
                 .player2(activePlayer2)
                 .isTieBreak(false)
