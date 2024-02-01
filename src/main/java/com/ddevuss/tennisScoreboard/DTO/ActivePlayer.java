@@ -14,6 +14,20 @@ public class ActivePlayer {
     private int id;
     private String name;
     private int score;
+    private int game;
     private int set;
+    private boolean isAdvantage;
+
+    public void plusScore() {
+        score++;
+    }
+
+    public void plusGame() {
+        game++;
+    }
+
+    public void plusSet() {
+        set++;
+    }
 
 }
