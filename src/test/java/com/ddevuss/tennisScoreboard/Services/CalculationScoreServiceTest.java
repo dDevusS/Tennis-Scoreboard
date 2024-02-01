@@ -38,7 +38,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will become deuce situation and decide this")
-    void decidingDeuceSituationTest() {
+    void decidingDeuceSituation() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -70,7 +70,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will increase sets score after coming 6-4 games")
-    void checkingEndOfSetWithSixFourGamesTest() {
+    void checkingEndOfSetWithSixFourGames() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -88,7 +88,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will increase sets score after coming 7-5 games")
-    void checkingEndOfSetWithSevenFiveGamesTest() {
+    void checkingEndOfSetWithSevenFiveGames() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -106,7 +106,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will become tieBreak and decide this with score 7-5")
-    void becomingAndDecidingTieBreakWithSevenFiveScoreTest() {
+    void becomingAndDecidingTieBreakWithSevenFiveScore() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -143,7 +143,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will become tieBreak and decide this with score 7-5")
-    void becomingAndDecidingTieBreakWithEightSixScoreTest() {
+    void becomingAndDecidingTieBreakWithEightSixScore() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -180,7 +180,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will become tieBreak and decide this with score 9-7")
-    void becomingAndDecidingTieBreakWithNineSevenScoreTest() {
+    void becomingAndDecidingTieBreakWithNineSevenScore() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -224,7 +224,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("Will remove the match from a HashMap")
-    void checkingEndOfMatchTest() {
+    void checkingEndOfMatch() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(1);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
