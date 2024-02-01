@@ -8,10 +8,7 @@ import com.ddevuss.tennisScoreboard.model.Match;
 import com.ddevuss.tennisScoreboard.model.Player;
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MainMatchesService implements IMainMatchesService {
 
@@ -21,23 +18,31 @@ public class MainMatchesService implements IMainMatchesService {
     private static final MainMatchesService INSTANCE = new MainMatchesService();
     @Getter
     private final Map<UUID, CurrentMatch> currentMatches = new HashMap<>();
+    @Getter
+    private final List<UUID> uuidList = new ArrayList<>();
 
     private MainMatchesService() {
     }
 
     @Override
-    public void createNewMatch(CurrentMatch currentMatch) {
-        Player player1 = PLAYER_DAO.registerPlayerByName(currentMatch.getPlayer1().getName());
-        Player player2 = PLAYER_DAO.registerPlayerByName(currentMatch.getPlayer2().getName());
+    public void createNewMatch(String playerName1, String playerName2) {
+
+        //TODO: решить на каком этапе будут отсеиваться игроки с одинаковыми именами
+
+        Player player1 = PLAYER_DAO.registerPlayerByName(playerName1);
+        Player player2 = PLAYER_DAO.registerPlayerByName(playerName2);
 
         ActivePlayer activePlayer1 = getNewActivePlayer(player1);
         ActivePlayer activePlayer2 = getNewActivePlayer(player2);
         var randomUUID = UUID.randomUUID();
 
-        currentMatch = CurrentMatch.of().uuid(randomUUID)
+        getUuidList().add(randomUUID);
+
+        CurrentMatch currentMatch = CurrentMatch.of().uuid(randomUUID)
                 .player1(activePlayer1)
                 .player2(activePlayer2)
                 .isTieBreak(false)
+                .isDeuce(false)
                 .build();
 
         currentMatches.put(randomUUID, currentMatch);
@@ -54,6 +59,12 @@ public class MainMatchesService implements IMainMatchesService {
     }
 
     private ActivePlayer getNewActivePlayer (Player player) {
-        return ActivePlayer.of().id(player.getId()).name(player.getName()).score(0).set(0).build();
+        return ActivePlayer.of()
+                .id(player.getId())
+                .name(player.getName())
+                .score(0)
+                .game(0).set(0)
+                .isAdvantage(false)
+                .build();
     }
 }

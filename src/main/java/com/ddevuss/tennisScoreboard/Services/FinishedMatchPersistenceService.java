@@ -19,6 +19,7 @@ public class FinishedMatchPersistenceService {
     public void finishCurrentMatch(CurrentMatch currentMatch) {
         Match endedMatch = generateMatchModel(currentMatch);
         MATCH_DAO.save(endedMatch);
+        //TODO: возвращает обьект из мапы. можно переделать
         MAIN_SERVICE.getCurrentMatches().remove(currentMatch.getUuid());
     }
 

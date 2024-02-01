@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface IMainMatchesService {
 
-    void createNewMatch(CurrentMatch match);
+    void createNewMatch(String playerName1, String playerName2);
 
     Map<UUID, CurrentMatch> getCurrentMatches();
 
