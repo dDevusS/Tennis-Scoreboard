@@ -2,33 +2,30 @@ package com.ddevuss.tennisScoreboard.DAO;
 
 import com.ddevuss.tennisScoreboard.model.Match;
 import com.ddevuss.tennisScoreboard.model.Player;
-import com.ddevuss.tennisScoreboard.utils.DatabaseConnector;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Tag("DAOImplementedClass")
 class MatchDAOTest {
 
-    private static Match match1;
-    private static Match match2;
-    private static Match match3;
-    private static Match match4;
     private final static Player player1 = Player.of().name("Stanislav").build();
     private final static Player player2 = Player.of().name("Boris").build();
     private final static Player player3 = Player.of().name("Oleg").build();
     private final static Player player4 = Player.of().name("Fedor").build();
     private final static MatchDAO matchDAO = MatchDAO.getInstance();
     private final static PlayerDAO playerDAO = PlayerDAO.getInstance();
+    private static Match match1;
+    private static Match match2;
+    private static Match match3;
+    private static Match match4;
 
     @BeforeAll
     static void createFieldsAndAddPlayersIntoDB() {
@@ -45,6 +42,32 @@ class MatchDAOTest {
 
     static Stream<Match> provideMatches() {
         return Stream.of(match1, match2, match3, match4);
+    }
+
+    static Stream<Arguments> provideArgumentsForUpdateTest() {
+        return Stream.of(
+                Arguments.of(
+                        Match.of().player1(player3)
+                                .player2(player4)
+                                .winner(player3)
+                                .id(1).build(),
+                        true
+                ),
+                Arguments.of(
+                        Match.of().player1(player1)
+                                .player2(player3)
+                                .winner(player1)
+                                .id(2).build(),
+                        true
+                ),
+                Arguments.of(
+                        Match.of().player1(player1)
+                                .player2(player3)
+                                .winner(player1)
+                                .id(1000).build(),
+                        false
+                )
+        );
     }
 
     @ParameterizedTest
@@ -80,32 +103,6 @@ class MatchDAOTest {
         assertThat(matches).isNotEmpty();
     }
 
-    static Stream<Arguments> provideArgumentsForUpdateTest() {
-        return Stream.of(
-                Arguments.of(
-                        Match.of().player1(player3)
-                                .player2(player4)
-                                .winner(player3)
-                                .id(1).build(),
-                        true
-                        ),
-                Arguments.of(
-                        Match.of().player1(player1)
-                                .player2(player3)
-                                .winner(player1)
-                                .id(2).build(),
-                        true
-                ),
-                Arguments.of(
-                        Match.of().player1(player1)
-                                .player2(player3)
-                                .winner(player1)
-                                .id(1000).build(),
-                        false
-                )
-        );
-    }
-
     @ParameterizedTest
     @Order(2)
     @MethodSource("provideArgumentsForUpdateTest")
@@ -134,7 +131,7 @@ class MatchDAOTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"UnrealName", "Stanislav", "Boris", })
+    @ValueSource(strings = {"UnrealName", "Stanislav", "Boris",})
     @DisplayName("will return list with matches there is player with this name")
     void returnMatchListWithPlayerWithThisName(String playerName) {
         if ("UnrealName".equalsIgnoreCase(playerName)) {

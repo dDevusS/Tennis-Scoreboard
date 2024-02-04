@@ -5,7 +5,8 @@ import org.junit.jupiter.api.*;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static com.ddevuss.tennisScoreboard.UtilsForTesting.MatchScoreAssertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("CalculationScoreTest")
 public class CalculationScoreServiceTest {
@@ -19,6 +20,18 @@ public class CalculationScoreServiceTest {
         MAIN_MATCHES_SERVICE.createNewMatch("Dmitriy", "Leonid");
     }
 
+    private static void makeTieBreakSituation(CurrentMatch currentMatch) {
+        currentMatch.getPlayer1().setGame(6);
+        currentMatch.getPlayer2().setGame(6);
+        currentMatch.setTieBreak(true);
+    }
+
+    private static void makeDeuceSituation(CurrentMatch currentMatch) {
+        currentMatch.getPlayer1().setScore(3);
+        currentMatch.getPlayer2().setScore(3);
+        currentMatch.setDeuce(true);
+    }
+
     @BeforeEach
     void resetCurrentMatch() {
         var matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
@@ -27,10 +40,12 @@ public class CalculationScoreServiceTest {
         currentMatch.getPlayer1().setScore(0);
         currentMatch.getPlayer1().setGame(0);
         currentMatch.getPlayer1().setSet(0);
+        currentMatch.getPlayer1().setAdvantage(false);
 
         currentMatch.getPlayer2().setScore(0);
         currentMatch.getPlayer2().setGame(0);
         currentMatch.getPlayer2().setSet(0);
+        currentMatch.getPlayer2().setAdvantage(false);
 
         currentMatch.setDeuce(false);
         currentMatch.setTieBreak(false);
@@ -48,12 +63,12 @@ public class CalculationScoreServiceTest {
         }
 
         Assertions.assertAll("Player1 have to have 1 games point and player2 have to have 0 games point" +
-                " while score and sets must be 0 for both players.",
+                        " while score and sets must be 0 for both players.",
                 () -> {
-            assertScoreForPlayers(currentMatch, 0);
-            assertGamesForPlayers(currentMatch, 1, 0);
-            assertSetsForPlayers(currentMatch, 0);
-        });
+                    assertScoreForPlayers(currentMatch, 0);
+                    assertGamesForPlayers(currentMatch, 1, 0);
+                    assertSetsForPlayers(currentMatch, 0);
+                });
     }
 
     @Test
@@ -61,8 +76,12 @@ public class CalculationScoreServiceTest {
     void deuceIsTrue_AfterStartingDeuceSituation() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
+        int servingNumber = 3;
 
-        makeDeuceSituation(currentMatch);
+        for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
+            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
+            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
+        }
 
         assertThat(currentMatch.isDeuce())
                 .describedAs("CurrentMatch.isDeuce must be true.")
@@ -191,8 +210,17 @@ public class CalculationScoreServiceTest {
     void trueTiebreak_WhenPlayersGainSixGamesEach() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
+        currentMatch.getPlayer1().setGame(5);
+        currentMatch.getPlayer2().setGame(5);
+        int servingNumber = 4;
 
-        makeTieBreakSituation(currentMatch);
+        for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
+            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
+        }
+
+        for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
+            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
+        }
 
         assertThat(currentMatch.isTieBreak())
                 .describedAs("currentMatch.isTieBreak must be true.")
@@ -202,7 +230,7 @@ public class CalculationScoreServiceTest {
     @Test
     @DisplayName("First player must get 1 set point after deciding tie break situation. " +
             "Players scores and games must reset to zero.")
-        void firstPlayerGainsOneSetPointInTiebreak_AfterWinningSevenBallsFirst() {
+    void firstPlayerGainsOneSetPointInTiebreak_AfterWinningSevenBallsFirst() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -227,7 +255,7 @@ public class CalculationScoreServiceTest {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
-       makeTieBreakSituation(currentMatch);
+        makeTieBreakSituation(currentMatch);
 
         for (int playCounter = 0; playCounter < 7; playCounter++) {
             CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
@@ -254,90 +282,5 @@ public class CalculationScoreServiceTest {
         assertThat(maybeCurrentMatch)
                 .describedAs("MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID) must return null.")
                 .isNull();
-    }
-
-    private static void assertScoreForPlayers(CurrentMatch currentMatch, int scoreForBothPlayers) {
-        Assertions.assertAll(
-                "Expected to get " + scoreForBothPlayers + " score point from both players.",
-                () -> {
-            assertThat(currentMatch.getPlayer1().getScore()).isEqualTo(scoreForBothPlayers);
-            assertThat(currentMatch.getPlayer2().getScore()).isEqualTo(scoreForBothPlayers);
-        });
-    }
-
-    private static void assertScoreForPlayers(CurrentMatch currentMatch, int player1Score, int player2Score) {
-        Assertions.assertAll(
-                () -> {
-                    assertThat(currentMatch.getPlayer1().getScore())
-                            .describedAs("Expected to get " + player1Score + " score points from first player.")
-                            .isEqualTo(player1Score);
-                    assertThat(currentMatch.getPlayer2().getScore())
-                            .describedAs("Expected to get " + player2Score + " score points from second player.")
-                            .isEqualTo(player2Score);
-                });
-    }
-
-    private static void assertGamesForPlayers(CurrentMatch currentMatch, int gamesFromBothPlayers) {
-        Assertions.assertAll(
-                "Expected to get " + gamesFromBothPlayers + " games points from both players.",
-                () -> {
-                    assertThat(currentMatch.getPlayer1().getGame()).isEqualTo(gamesFromBothPlayers);
-                    assertThat(currentMatch.getPlayer2().getGame()).isEqualTo(gamesFromBothPlayers);
-                });
-    }
-
-    private static void assertGamesForPlayers(CurrentMatch currentMatch, int player1Games, int player2Games) {
-        Assertions.assertAll(
-                () -> {
-                    assertThat(currentMatch.getPlayer1().getGame())
-                            .describedAs("Expected to get " + player1Games + " games points from first player.")
-                            .isEqualTo(player1Games);
-                    assertThat(currentMatch.getPlayer2().getGame())
-                            .describedAs("Expected to get " + player2Games + " games points from second player.")
-                            .isEqualTo(player2Games);
-                });
-    }
-
-    private static void assertSetsForPlayers(CurrentMatch currentMatch, int setsFromBothPlayers) {
-        Assertions.assertAll(
-                "Expected to get " + setsFromBothPlayers + " sets points from both players.",
-                () -> {
-                    assertThat(currentMatch.getPlayer1().getSet()).isEqualTo(setsFromBothPlayers);
-                    assertThat(currentMatch.getPlayer2().getSet()).isEqualTo(setsFromBothPlayers);
-                });
-    }
-
-    private static void assertSetsForPlayers(CurrentMatch currentMatch, int player1Sets, int player2Sets) {
-        Assertions.assertAll(
-                () -> {
-                    assertThat(currentMatch.getPlayer1().getSet())
-                            .describedAs("Expected to get " + player1Sets + " sets points from first player.")
-                            .isEqualTo(player1Sets);
-                    assertThat(currentMatch.getPlayer2().getSet())
-                            .describedAs("Expected to get " + player2Sets + " sets points from second player.")
-                            .isEqualTo(player2Sets);
-                });
-    }
-
-    private static void makeTieBreakSituation(CurrentMatch currentMatch) {
-        currentMatch.getPlayer1().setGame(5);
-        currentMatch.getPlayer2().setGame(5);
-        int servingNumber = 4;
-
-        for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
-        }
-
-        for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
-        }
-    }
-
-    private static void makeDeuceSituation(CurrentMatch currentMatch) {
-        int servingNumber = 3;
-        for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
-        }
     }
 }

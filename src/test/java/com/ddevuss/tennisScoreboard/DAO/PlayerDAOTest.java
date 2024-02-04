@@ -1,7 +1,7 @@
 package com.ddevuss.tennisScoreboard.DAO;
 
-import com.ddevuss.tennisScoreboard.model.Player;
 import com.ddevuss.tennisScoreboard.UtilsForTesting.PreparerDatabase;
+import com.ddevuss.tennisScoreboard.model.Player;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,9 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("DAOImplementedClass")
 class PlayerDAOTest {
 
+    private final static PlayerDAO playerDAO = PlayerDAO.getInstance();
     private static Player player1;
     private static Player player2;
-    private final static PlayerDAO playerDAO = PlayerDAO.getInstance();
 
     @BeforeAll
     static void createFieldsAndPrepareDB() {
@@ -28,6 +28,19 @@ class PlayerDAOTest {
 
     static Stream<Player> providePlayers() {
         return Stream.of(player1, player2);
+    }
+
+    static Stream<Arguments> getArgumentsForUpdateTest() {
+        return Stream.of(
+                Arguments.of(Player.of().id(1).name("Sergey").build()),
+                Arguments.of(Player.of().id(2).name("Ivan").build()),
+                Arguments.of(Player.of().id(1000).name("NonExisted").build())
+        );
+    }
+
+    @AfterAll
+    static void clearDB() {
+        PreparerDatabase.clearTablePlayersAfterTesting();
     }
 
     @ParameterizedTest
@@ -72,14 +85,6 @@ class PlayerDAOTest {
         }
     }
 
-    static Stream<Arguments> getArgumentsForUpdateTest() {
-        return Stream.of(
-                Arguments.of(Player.of().id(1).name("Sergey").build()),
-                Arguments.of(Player.of().id(2).name("Ivan").build()),
-                Arguments.of(Player.of().id(1000).name("NonExisted").build())
-        );
-    }
-
     @ParameterizedTest
     @ValueSource(ints = {3, 1000})
     @DisplayName("will be true if player with this ID exists in the DB")
@@ -107,10 +112,5 @@ class PlayerDAOTest {
         var newPlayer = playerDAO.registerPlayerByName(newPlayerName);
         assertThat(newPlayer.getId()).isNotZero();
         assertThat(newPlayer.getName()).isEqualTo(newPlayerName);
-    }
-
-    @AfterAll
-    static void clearDB() {
-        PreparerDatabase.clearTablePlayersAfterTesting();
     }
 }
