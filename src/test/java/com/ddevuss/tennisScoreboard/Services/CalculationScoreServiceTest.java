@@ -53,7 +53,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("will increase games score for first player and reset score for both")
-    void firstPlayerGainsOneGamePoint_AfterFourConsecutivePoints() {
+    void playerGainsOneGamePoint_AfterFourConsecutivePoints() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
         int servingNumber = 4;
@@ -90,7 +90,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("First player must have advantage when he win boll in starting deuce situation.")
-    void firstPlayerHaveAdvantage_AfterWinningBollWhileDeuceSituation() {
+    void playerHaveAdvantage_AfterWinningBollInDeuceSituation() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -110,7 +110,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("Players score mustn't change after starting deuce situation.")
-    void playersScoreThreePointsEachInDeuceSituation_AfterWinningOneBallEach() {
+    void playersHaveThreePointsEachInDeuceSituation_AfterWinningOneBallEach() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -123,7 +123,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("First player must get 1 game when he win boll twice after starting deuce situation.")
-    void gettingOneGamesPoint_AfterWinningTwoBollsConsecutiveByFirstPlayer() {
+    void gainGamesPoint_AfterWinningTwoBollsConsecutive() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
         int servingNumber = 2;
@@ -184,7 +184,7 @@ public class CalculationScoreServiceTest {
     @Test
     @DisplayName("First player must have 1 sets point," +
             " players scores and players games must reset to zero after coming 7-5 games")
-    void firstPlayerGainsOneSetsPoint_AfterWinningSevenGamesFirst() {
+    void playerGainsOneSetsPoint_AfterWinningSevenGamesFirst() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
         int servingNumber = 8;
@@ -230,7 +230,7 @@ public class CalculationScoreServiceTest {
     @Test
     @DisplayName("First player must get 1 set point after deciding tie break situation. " +
             "Players scores and games must reset to zero.")
-    void firstPlayerGainsOneSetPointInTiebreak_AfterWinningSevenBallsFirst() {
+    void playerGainsOneSetPointInTiebreak_AfterWinningSevenBallsFirst() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -268,7 +268,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("Will remove the match from a HashMap")
-    void removingMatchFromCurrentMatchesHashMap_WhenFirstPlayerWinMatch() {
+    void removingMatchFromCurrentMatches_WhenPlayerWinMatch() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(1);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
