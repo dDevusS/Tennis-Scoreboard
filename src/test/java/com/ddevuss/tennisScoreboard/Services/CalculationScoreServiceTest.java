@@ -58,7 +58,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("CurrentMatch.isDeuce must be true when each players get 3 score points.")
-    void deuceIsTrueAfterStartingDeuceSituation() {
+    void deuceIsTrue_AfterStartingDeuceSituation() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -71,7 +71,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("First player must have advantage when he win boll in starting deuce situation.")
-    void firstPlayerHaveAdvantageAfterWinningBollWhileDeuceSituation() {
+    void firstPlayerHaveAdvantage_AfterWinningBollWhileDeuceSituation() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -91,7 +91,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("Players score mustn't change after starting deuce situation.")
-    void playersScoreThreePointsEachInDeuceSituationAfterWinningOneBallEach() {
+    void playersScoreThreePointsEachInDeuceSituation_AfterWinningOneBallEach() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -148,7 +148,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("Players scores must be zero after deciding deuce situation.")
-    void zeroPlayersScoreAfterDecidingDeuce() {
+    void zeroPlayersScore_AfterDecidingDeuce() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
         int servingNumber = 2;
@@ -188,7 +188,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("TieBreak must become true when players games score will be 6-6.")
-    void trueTiebreakWhenPlayersGainSixGamesEach() {
+    void trueTiebreak_WhenPlayersGainSixGamesEach() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -202,7 +202,7 @@ public class CalculationScoreServiceTest {
     @Test
     @DisplayName("First player must get 1 set point after deciding tie break situation. " +
             "Players scores and games must reset to zero.")
-        void firstPlayerGainsOneSetPointInTiebreakAfterWinningSevenBallsFirst() {
+        void firstPlayerGainsOneSetPointInTiebreak_AfterWinningSevenBallsFirst() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -223,7 +223,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("tieBreak from currentMatch must be false after deciding tieBreak situation.")
-    void falseTieBreakAfterDecidingTieBreak() {
+    void falseTieBreak_AfterDecidingTieBreak() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
@@ -240,7 +240,7 @@ public class CalculationScoreServiceTest {
 
     @Test
     @DisplayName("Will remove the match from a HashMap")
-    void removingMatchFromCurrentMatchesHashMapWhenFirstPlayerWinMatch() {
+    void removingMatchFromCurrentMatchesHashMap_WhenFirstPlayerWinMatch() {
         UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(1);
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
