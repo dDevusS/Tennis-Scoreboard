@@ -2,23 +2,17 @@ package com.ddevuss.tennisScoreboard.Services;
 
 import com.ddevuss.tennisScoreboard.DTO.ActivePlayer;
 import com.ddevuss.tennisScoreboard.DTO.CurrentMatch;
-import lombok.Getter;
 
 import java.util.UUID;
 
+import static com.ddevuss.tennisScoreboard.Services.FinishedMatchPersistenceService.finishCurrentMatch;
+
 public class CalculationScoreService {
 
-    @Getter
-    private static final CalculationScoreService INSTANCE = new CalculationScoreService();
-    private final MainMatchesService mainMatchesService = MainMatchesService.getINSTANCE();
-    private final FinishedMatchPersistenceService finishedMatchPersistenceService
-            = FinishedMatchPersistenceService.getINSTANCE();
+    private static final MainMatchesService MAIN_MATCHES_SERVICE = MainMatchesService.getINSTANCE();
 
-    private CalculationScoreService() {
-    }
-
-    public void plusPointToPlayer(UUID uuid, int playerId) {
-        CurrentMatch currentMatch = mainMatchesService.getCurrentMatches().get(uuid);
+    public static void plusPointToPlayer(UUID uuid, int playerId) {
+        CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(uuid);
 
         if (currentMatch.isDeuce()) {
             decideDeuceSituation(currentMatch, playerId);
@@ -37,7 +31,7 @@ public class CalculationScoreService {
         checkEndOfMatch(currentMatch);
     }
 
-    private void decideDeuceSituation(CurrentMatch currentMatch, int playerId) {
+    private static void decideDeuceSituation(CurrentMatch currentMatch, int playerId) {
         if (currentMatch.getPlayer1().getId() == playerId && currentMatch.getPlayer1().isAdvantage()) {
             resetScoreAndPlusGame(currentMatch.getPlayer1(), currentMatch.getPlayer2());
             currentMatch.setDeuce(false);
@@ -56,7 +50,7 @@ public class CalculationScoreService {
         }
     }
 
-    private void checkEndOfSetIfTieBreak(CurrentMatch currentMatch) {
+    private static void checkEndOfSetIfTieBreak(CurrentMatch currentMatch) {
         ActivePlayer activePlayer1 = currentMatch.getPlayer1();
         ActivePlayer activePlayer2 = currentMatch.getPlayer2();
         int tieBreakBound = 7;
@@ -75,7 +69,7 @@ public class CalculationScoreService {
         }
     }
 
-    private void  checkEndOfGame(CurrentMatch currentMatch, int playerId) {
+    private static void  checkEndOfGame(CurrentMatch currentMatch, int playerId) {
         ActivePlayer activePlayer1 = currentMatch.getPlayer1();
         ActivePlayer activePlayer2 = currentMatch.getPlayer2();
         int fortyPoints = 3;
@@ -92,7 +86,7 @@ public class CalculationScoreService {
         }
     }
 
-    private void checkEndOfSet(CurrentMatch currentMatch) {
+    private static void checkEndOfSet(CurrentMatch currentMatch) {
         ActivePlayer activePlayer1 = currentMatch.getPlayer1();
         ActivePlayer activePlayer2 = currentMatch.getPlayer2();
         int gamesBound = 6;
@@ -115,7 +109,7 @@ public class CalculationScoreService {
         }
     }
 
-    private void plusPointToActivePlayer(CurrentMatch currentMatch, int playerId) {
+    private static void plusPointToActivePlayer(CurrentMatch currentMatch, int playerId) {
         if (currentMatch.getPlayer1().getId() == playerId) {
             currentMatch.getPlayer1().plusScore();
         }
@@ -124,16 +118,16 @@ public class CalculationScoreService {
         }
     }
 
-    private void checkEndOfMatch(CurrentMatch currentMatch) {
+    private static void checkEndOfMatch(CurrentMatch currentMatch) {
         int requiredSetsForVictory = 2;
 
         if (currentMatch.getPlayer1().getSet() == requiredSetsForVictory
                 || currentMatch.getPlayer2().getSet() == requiredSetsForVictory) {
-            finishedMatchPersistenceService.finishCurrentMatch(currentMatch);
+            finishCurrentMatch(currentMatch);
         }
     }
 
-    private void resetScoreAndPlusSet(ActivePlayer wonPlayer, ActivePlayer beatenPlayer) {
+    private static void resetScoreAndPlusSet(ActivePlayer wonPlayer, ActivePlayer beatenPlayer) {
         wonPlayer.setScore(0);
         wonPlayer.setGame(0);
         wonPlayer.plusSet();
@@ -141,7 +135,7 @@ public class CalculationScoreService {
         beatenPlayer.setGame(0);
     }
 
-    private void resetScoreAndPlusGame(ActivePlayer wonPlayer, ActivePlayer beatenPlayer) {
+    private static void resetScoreAndPlusGame(ActivePlayer wonPlayer, ActivePlayer beatenPlayer) {
         wonPlayer.setScore(0);
         wonPlayer.plusGame();
         wonPlayer.setAdvantage(false);

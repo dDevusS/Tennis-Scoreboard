@@ -5,13 +5,13 @@ import org.junit.jupiter.api.*;
 
 import java.util.UUID;
 
+import static com.ddevuss.tennisScoreboard.Services.CalculationScoreService.plusPointToPlayer;
 import static com.ddevuss.tennisScoreboard.UtilsForTesting.MatchScoreAssertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("CalculationScoreTest")
 public class CalculationScoreServiceTest {
 
-    private static final CalculationScoreService CALCULATION_SCORE_SERVICE = CalculationScoreService.getINSTANCE();
     private static final MainMatchesService MAIN_MATCHES_SERVICE = MainMatchesService.getINSTANCE();
 
     @BeforeAll
@@ -59,7 +59,7 @@ public class CalculationScoreServiceTest {
         int servingNumber = 4;
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         Assertions.assertAll("Player1 have to have 1 games point and player2 have to have 0 games point" +
@@ -79,8 +79,8 @@ public class CalculationScoreServiceTest {
         int servingNumber = 3;
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
+            plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
+            plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
         }
 
         assertThat(currentMatch.isDeuce())
@@ -95,7 +95,7 @@ public class CalculationScoreServiceTest {
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
         makeDeuceSituation(currentMatch);
-        CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+        plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
 
         Assertions.assertAll(
                 () -> {
@@ -115,8 +115,8 @@ public class CalculationScoreServiceTest {
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
         makeDeuceSituation(currentMatch);
-        CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
-        CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer2().getId());
+        plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+        plusPointToPlayer(matchUUID, currentMatch.getPlayer2().getId());
 
         assertScoreForPlayers(currentMatch, 3);
     }
@@ -130,7 +130,7 @@ public class CalculationScoreServiceTest {
 
         makeDeuceSituation(currentMatch);
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         assertGamesForPlayers(currentMatch, 1, 0);
@@ -147,7 +147,7 @@ public class CalculationScoreServiceTest {
         makeDeuceSituation(currentMatch);
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         Assertions.assertAll(
@@ -175,7 +175,7 @@ public class CalculationScoreServiceTest {
         makeDeuceSituation(currentMatch);
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         assertScoreForPlayers(currentMatch, 0);
@@ -193,7 +193,7 @@ public class CalculationScoreServiceTest {
         currentMatch.getPlayer2().setGame(5);
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         Assertions.assertAll(
@@ -215,11 +215,11 @@ public class CalculationScoreServiceTest {
         int servingNumber = 4;
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
+            plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer1().getId());
         }
 
         for (int playCounter = 0; playCounter < servingNumber; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
+            plusPointToPlayer(currentMatch.getUuid(), currentMatch.getPlayer2().getId());
         }
 
         assertThat(currentMatch.isTieBreak())
@@ -237,7 +237,7 @@ public class CalculationScoreServiceTest {
         makeTieBreakSituation(currentMatch);
 
         for (int playCounter = 0; playCounter < 7; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         Assertions.assertAll(
@@ -258,7 +258,7 @@ public class CalculationScoreServiceTest {
         makeTieBreakSituation(currentMatch);
 
         for (int playCounter = 0; playCounter < 7; playCounter++) {
-            CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+            plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         }
 
         assertThat(currentMatch.isTieBreak())
@@ -276,7 +276,7 @@ public class CalculationScoreServiceTest {
         currentMatch.getPlayer1().setGame(5);
         currentMatch.getPlayer1().setScore(3);
 
-        CALCULATION_SCORE_SERVICE.plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
+        plusPointToPlayer(matchUUID, currentMatch.getPlayer1().getId());
         CurrentMatch maybeCurrentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
 
         assertThat(maybeCurrentMatch)

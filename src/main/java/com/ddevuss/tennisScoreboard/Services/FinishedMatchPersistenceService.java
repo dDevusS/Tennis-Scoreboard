@@ -10,20 +10,15 @@ public class FinishedMatchPersistenceService {
 
     private static final MatchDAO MATCH_DAO = MatchDAO.getInstance();
     private static final MainMatchesService MAIN_SERVICE = MainMatchesService.getINSTANCE();
-    @Getter
-    private static final FinishedMatchPersistenceService INSTANCE = new FinishedMatchPersistenceService();
 
-    private FinishedMatchPersistenceService() {
-    }
-
-    public void finishCurrentMatch(CurrentMatch currentMatch) {
+    public static void finishCurrentMatch(CurrentMatch currentMatch) {
         Match endedMatch = generateMatchModel(currentMatch);
         MATCH_DAO.save(endedMatch);
         //TODO: возвращает обьект из мапы. можно переделать
         MAIN_SERVICE.getCurrentMatches().remove(currentMatch.getUuid());
     }
 
-    private Match generateMatchModel(CurrentMatch currentMatch) {
+    private static Match generateMatchModel(CurrentMatch currentMatch) {
         Player player1 = Player.of()
                 .id(currentMatch.getPlayer1().getId())
                 .name(currentMatch.getPlayer1().getName())
