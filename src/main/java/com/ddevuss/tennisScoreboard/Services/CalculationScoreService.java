@@ -40,6 +40,7 @@ public class CalculationScoreService {
     private void decideDeuceSituation(CurrentMatch currentMatch, int playerId) {
         if (currentMatch.getPlayer1().getId() == playerId && currentMatch.getPlayer1().isAdvantage()) {
             resetScoreAndPlusGame(currentMatch.getPlayer1(), currentMatch.getPlayer2());
+            currentMatch.setDeuce(false);
         }
         else if (currentMatch.getPlayer1().getId() == playerId) {
             currentMatch.getPlayer1().setAdvantage(true);
@@ -47,6 +48,7 @@ public class CalculationScoreService {
         }
         else if (currentMatch.getPlayer2().isAdvantage()) {
             resetScoreAndPlusGame(currentMatch.getPlayer2(), currentMatch.getPlayer1());
+            currentMatch.setDeuce(false);
         }
         else {
             currentMatch.getPlayer2().setAdvantage(true);
