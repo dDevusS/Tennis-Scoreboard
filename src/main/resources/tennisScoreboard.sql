@@ -12,3 +12,5 @@ CREATE TABLE IF NOT EXISTS Matches (
                          FOREIGN KEY (Player2) REFERENCES Players(ID) ON DELETE CASCADE,
                          FOREIGN KEY (Winner) REFERENCES Players(ID) ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS ind_name ON Players (Name);

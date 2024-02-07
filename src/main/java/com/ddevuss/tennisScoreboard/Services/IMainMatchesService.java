@@ -9,12 +9,12 @@ import java.util.UUID;
 
 public interface IMainMatchesService {
 
-    void createNewMatch(String playerName1, String playerName2);
+    UUID createNewMatch(String playerName1, String playerName2);
 
     Map<UUID, CurrentMatch> getCurrentMatches();
 
     List<Match> getAllEndedMatches();
 
-    List<Match> getEndedMatches(String playerName);
+    List<Match> getEndedMatchesByPlayerName(String playerName);
 
 }

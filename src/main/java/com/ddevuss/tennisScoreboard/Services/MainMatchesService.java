@@ -17,15 +17,17 @@ public class MainMatchesService implements IMainMatchesService {
     @Getter
     private static final MainMatchesService INSTANCE = new MainMatchesService();
     @Getter
-    private final Map<UUID, CurrentMatch> currentMatches = new HashMap<>();
+    private Map<UUID, CurrentMatch> currentMatches;
     @Getter
-    private final List<UUID> uuidList = new ArrayList<>();
+    private List<UUID> uuidList;
 
     private MainMatchesService() {
+        currentMatches = new HashMap<>();
+        uuidList = new ArrayList<>();
     }
 
     @Override
-    public void createNewMatch(String playerName1, String playerName2) {
+    public UUID createNewMatch(String playerName1, String playerName2) {
 
         //TODO: решить на каком этапе будут отсеиваться игроки с одинаковыми именами
 
@@ -34,7 +36,7 @@ public class MainMatchesService implements IMainMatchesService {
 
         ActivePlayer activePlayer1 = getNewActivePlayer(player1);
         ActivePlayer activePlayer2 = getNewActivePlayer(player2);
-        var randomUUID = UUID.randomUUID();
+        UUID randomUUID = UUID.randomUUID();
 
         getUuidList().add(randomUUID);
 
@@ -47,6 +49,8 @@ public class MainMatchesService implements IMainMatchesService {
                 .build();
 
         currentMatches.put(randomUUID, currentMatch);
+
+        return randomUUID;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class MainMatchesService implements IMainMatchesService {
     }
 
     @Override
-    public List<Match> getEndedMatches(String playerName) {
+    public List<Match> getEndedMatchesByPlayerName(String playerName) {
         return MATCH_DAO.findAllByPlayerName(playerName);
     }
 

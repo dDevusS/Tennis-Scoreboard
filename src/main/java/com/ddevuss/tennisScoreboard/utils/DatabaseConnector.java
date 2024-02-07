@@ -2,7 +2,13 @@ package com.ddevuss.tennisScoreboard.utils;
 
 import lombok.Getter;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 
 public class DatabaseConnector {
 
@@ -20,25 +26,69 @@ public class DatabaseConnector {
             "FOREIGN KEY (Player2) REFERENCES Players(ID) ON DELETE CASCADE," +
             "FOREIGN KEY (Winner) REFERENCES Players(ID) ON DELETE CASCADE);";
     private static final String CREATE_INDEX_FOR_PLAYERS_NAME = "CREATE INDEX IF NOT EXISTS ind_name ON Players (Name);";
-    private final Configuration configuration = new Configuration().configure();
+    private final SessionFactory sessionFactory;
 
     private DatabaseConnector() {
+        this.sessionFactory = buildSessionFactory();
         createSQLRequest(CREATE_PLAYERS_TABLE);
-        createSQLRequest(CREATE_INDEX_FOR_PLAYERS_NAME);
         createSQLRequest(CREATE_MATCHES_TABLE);
+        createSQLRequest(CREATE_INDEX_FOR_PLAYERS_NAME);
     }
 
     public Session getSession() {
-        var sessionFactory = configuration.buildSessionFactory();
         return sessionFactory.openSession();
     }
 
     private void createSQLRequest(String sqlString) {
-        try (var session = getSession()) {
+        try (Session session = getSession()) {
             session.beginTransaction();
             session.createNativeMutationQuery(sqlString).executeUpdate();
             session.getTransaction().commit();
         }
     }
 
+    private SessionFactory buildSessionFactory() {
+        try {
+            StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
+                    .applySetting(Environment.JAKARTA_JDBC_DRIVER, "org.h2.Driver")
+                    .applySetting(Environment.JAKARTA_JDBC_URL, "jdbc:h2:mem:TennisMatches")
+                    .applySetting(Environment.JAKARTA_JDBC_USER, "username")
+                    .applySetting(Environment.JAKARTA_JDBC_PASSWORD, "password")
+                    .applySetting(Environment.DIALECT, "org.hibernate.dialect.H2Dialect")
+                    .build();
+
+            Metadata metadata = new MetadataSources(standardRegistry)
+                    .addAnnotatedClass(com.ddevuss.tennisScoreboard.model.Player.class)
+                    .addAnnotatedClass(com.ddevuss.tennisScoreboard.model.Match.class)
+                    .getMetadataBuilder()
+                    .applyImplicitNamingStrategy(new org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl())
+                    .build();
+
+            return metadata.getSessionFactoryBuilder().build();
+        } catch (Exception e) {
+            System.err.println("SessionFactory creation failed: " + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+//    private DatabaseConnector() {
+//        createSQLRequest(CREATE_PLAYERS_TABLE);
+//        createSQLRequest(CREATE_INDEX_FOR_PLAYERS_NAME);
+//        createSQLRequest(CREATE_MATCHES_TABLE);
+//    }
+//
+//    private final Configuration configuration = new Configuration().configure();
+//
+//    public Session getSession() {
+//        var sessionFactory = configuration.buildSessionFactory();
+//        return sessionFactory.openSession();
+//    }
+//
+//    private void createSQLRequest(String sqlString) {
+//        try (var session = getSession()) {
+//            session.beginTransaction();
+//            session.createNativeMutationQuery(sqlString).executeUpdate();
+//            session.getTransaction().commit();
+//        }
+//    }
 }
