@@ -17,9 +17,9 @@ public class MainMatchesService implements IMainMatchesService {
     @Getter
     private static final MainMatchesService INSTANCE = new MainMatchesService();
     @Getter
-    private Map<UUID, CurrentMatch> currentMatches;
+    private final Map<UUID, CurrentMatch> currentMatches;
     @Getter
-    private List<UUID> uuidList;
+    private final List<UUID> uuidList;
 
     private MainMatchesService() {
         currentMatches = new HashMap<>();
@@ -28,9 +28,6 @@ public class MainMatchesService implements IMainMatchesService {
 
     @Override
     public UUID createNewMatch(String playerName1, String playerName2) {
-
-        //TODO: решить на каком этапе будут отсеиваться игроки с одинаковыми именами
-
         Player player1 = PLAYER_DAO.registerPlayerByName(playerName1);
         Player player2 = PLAYER_DAO.registerPlayerByName(playerName2);
 
@@ -61,6 +58,10 @@ public class MainMatchesService implements IMainMatchesService {
     @Override
     public List<Match> getEndedMatchesByPlayerName(String playerName) {
         return MATCH_DAO.findAllByPlayerName(playerName);
+    }
+
+    public boolean deleteMatchById (int id) {
+        return MATCH_DAO.delete(id);
     }
 
     private ActivePlayer getNewActivePlayer (Player player) {
