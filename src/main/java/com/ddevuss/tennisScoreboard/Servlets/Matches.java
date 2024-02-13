@@ -29,13 +29,7 @@ public class Matches extends HttpServlet {
             allEndedMatches = mainMatchesService.getEndedMatchesByPlayerName(playerName);
         }
 
-        int lastPageNumber = getLastPageNumber(allEndedMatches.size());
-        int pageNumber = getPageNumber(req, allEndedMatches.size());
-        var listMatchForPage = getListMatchForPage(pageNumber, allEndedMatches);
-
-        req.setAttribute("lastPage", lastPageNumber);
-        req.setAttribute("matches", listMatchForPage);
-        req.getRequestDispatcher("/view/matches.jsp?page=" + pageNumber).forward(req, resp);
+        doRequestWithPagination(req, resp, allEndedMatches);
     }
 
     @Override
@@ -44,6 +38,11 @@ public class Matches extends HttpServlet {
         mainMatchesService.deleteMatchById(matchId);
         var allEndedMatches = mainMatchesService.getAllEndedMatches();
 
+        doRequestWithPagination(req, resp, allEndedMatches);
+    }
+
+    private void doRequestWithPagination(HttpServletRequest req, HttpServletResponse resp, List<Match> allEndedMatches)
+            throws ServletException, IOException {
         int lastPageNumber = getLastPageNumber(allEndedMatches.size());
         int pageNumber = getPageNumber(req, allEndedMatches.size());
         var listMatchForPage = getListMatchForPage(pageNumber, allEndedMatches);
@@ -58,7 +57,7 @@ public class Matches extends HttpServlet {
             return allEndedMatches;
         }
 
-        int firstIndex = ( pageNumber - 1 ) * PAGE_SIZE;
+        int firstIndex = (pageNumber - 1) * PAGE_SIZE;
         int secondIndex = firstIndex + PAGE_SIZE;
 
         if (secondIndex > allEndedMatches.size()) {
@@ -70,7 +69,7 @@ public class Matches extends HttpServlet {
 
     private int getPageNumber(HttpServletRequest req, int numberAllEndedMatches) {
         if (req.getParameter("page") == null) {
-            return  1;
+            return 1;
         }
         else {
             int page = Integer.parseInt(req.getParameter("page"));
