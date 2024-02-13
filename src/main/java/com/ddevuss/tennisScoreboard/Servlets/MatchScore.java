@@ -35,11 +35,12 @@ public class MatchScore extends HttpServlet {
         int playerId = Integer.parseInt(req.getParameter("playerId"));
 
         CalculationScoreService.plusPointToPlayer(uuidMatch, playerId);
-
         var currentMatch = currentMatches.get(uuidMatch);
 
         if (currentMatch == null) {
-            resp.sendRedirect("/Tennis_Scoreboard/matches");
+            var allEndedMatches = mainMatchesService.getAllEndedMatches();
+            resp.sendRedirect("/Tennis_Scoreboard/matches?page="
+                    + Matches.getLastPageNumber(allEndedMatches.size()));
         }
         else {
             req.setAttribute("match", currentMatch);
