@@ -1,0 +1,83 @@
+
+.ended-matches-div {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 400px;
+    width: 600px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.7em;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.header-table-div {
+    height: 10%;
+    width: 100%;
+    position: absolute;
+    top: 5%;
+    text-transform: uppercase;
+}
+
+.table-body-div {
+    height: 60%;
+    width: 100%;
+    position: absolute;
+    top: 20%;
+}
+
+.matches-table {
+    position: absolute;
+    left: 5%;
+    width: 90%; /* Ширина таблицы */
+    border-collapse: collapse; /* Схлопывание границ */
+}
+
+.matches-table td {
+    padding: 5px; /* Отступы внутри ячеек */
+    text-align: center; /* Выравнивание текста по центру */
+    color: var(--text-color);
+}
+
+.delete-button {
+    color: rgba(255, 0, 0, 0.47);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 100%;
+}
+
+.delete-button:hover {
+    color: red;
+}
+
+h4 {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    text-align: center;
+}
+
+.page-search-div {
+    position: absolute;
+    width: 90%;
+    height: 50px;
+    right: 5%;
+    bottom: 5%;
+    text-align: center;
+}
+
+.page-search-cell {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
+
+.input-field {
+    text-transform: none;
+}
+
+footer {
+    top: 40%;
+}

@@ -1,0 +1,61 @@
+
+.new-match-div {
+    position: relative;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 170px;
+    width: 500px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.7em;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.input-field-div {
+    width: 50%;
+    text-align: center;
+}
+
+.input-field {
+    text-transform: none;
+}
+
+#first-player {
+    position: absolute;
+    left: 0;
+    top: 20px;
+}
+
+#second-player {
+    position: absolute;
+    right: 0;
+    top: 20px;
+}
+
+.start-button-div {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 10%;
+}
+
+.start-button {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 10%;
+    font-size: 150%;
+}
+
+#errorMsg {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 35%;
+    font-size: 90%;
+    width: 100%;
+    text-align: center;
+    color: red;
+}

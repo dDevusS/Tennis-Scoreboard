@@ -30,16 +30,16 @@ public class ActivePlayer {
         set++;
     }
 
-    public int getTennisScore(boolean isTieBreak) {
+    public int getTennisScore (boolean isTieBreak) {
         if (isTieBreak) {
             return score;
         }
 
         switch (score) {
-            case 1  -> { return 15; }
-            case 2  -> { return 30; }
-            case 3  -> { return 40; }
-            default -> { return 0; }
+            case 1  -> { return  15; }
+            case 2  -> { return  30; }
+            case 3  -> { return  40; }
+            default -> { return  0; }
         }
     }
 }

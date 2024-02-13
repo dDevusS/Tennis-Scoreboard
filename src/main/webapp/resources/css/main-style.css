@@ -1,0 +1,68 @@
+
+:root {
+    --text-color: rgb(255, 211, 6);
+    --input-background-color: rgba(31,112,10,0.79);
+    --button-background-color: rgba(12, 63, 9, 0.85);
+    --button-hover-text-color: rgb(243, 3, 11);
+    --button-hover-background-color: rgba(72, 89, 8, 0.85);
+}
+
+button {
+    color: var(--text-color);
+    background: var(--button-background-color);
+    font-weight: bold;
+    border-radius: 0.4em;
+    text-transform: uppercase;
+}
+
+button:hover {
+    color: var(--button-hover-text-color);
+    background: var(--button-hover-background-color);
+}
+
+input {
+    color: var(--text-color);
+    font-weight: bold;
+    border-radius: 0.4em;
+    background: var(--input-background-color);
+}
+
+.head-nav-button {
+    font-size: 20px;
+    width: 300px;
+    height: 30px;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+body {
+    height: 80vh;
+    min-width: 700px;
+    min-height: 500px;
+    background: url(../img/court-Background.png) center center no-repeat fixed;
+    background-size: 100% 100%;
+    margin: 20px 20px 20px 20px;
+}
+
+header {
+    position: relative;
+    text-align: center;
+}
+
+footer {
+    position: relative;
+    top: 80%;
+    left: 5%;
+    min-width: 700px;
+    width: 700px;
+}
+
+
