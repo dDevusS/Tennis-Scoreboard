@@ -11,7 +11,7 @@ public class CalculationScoreService {
 
     private static final MainMatchesService MAIN_MATCHES_SERVICE = MainMatchesService.getINSTANCE();
 
-    public static void plusPointToPlayer(UUID uuid, int playerId) {
+    public static synchronized void plusPointToPlayer(UUID uuid, int playerId) {
         CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(uuid);
 
         if (currentMatch.isDeuce()) {
