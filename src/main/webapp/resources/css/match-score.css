@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: row;
     min-height: 150px;
+    gap: 80px;
 }
 
 .player-scoreboard-div {
@@ -26,14 +27,6 @@
     color: var(--text-color);
     text-transform: uppercase;
     font-weight: bold;
-}
-
-#first-player-scoreboard {
-    margin-right: 40px;
-}
-
-#second-player-scoreboard {
-    margin-left: 40px;
 }
 
 .player-score-cell-div {
@@ -56,7 +49,4 @@
 
 .plus-point-button-div {
     min-width: 150px;
-}
-
-.notice-advantage-div {
 }

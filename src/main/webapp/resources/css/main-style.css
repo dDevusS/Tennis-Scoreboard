@@ -27,12 +27,6 @@ input {
     background: var(--input-background-color);
 }
 
-.head-nav-button {
-    font-size: 20px;
-    width: 300px;
-    height: 30px;
-}
-
 body {
     display: flex;
     flex-direction: column;
@@ -42,10 +36,6 @@ body {
     background: url(../img/court-Background.png) center center no-repeat fixed;
     background-size: 100% 100%;
     padding: 50px 50px 50px 50px;
-}
-
-header, footer {
-    flex-shrink: 0;
 }
 
 .main-container {
@@ -58,16 +48,34 @@ header, footer {
     margin-bottom: 10%;
 }
 
+header, footer {
+    flex-shrink: 0;
+}
+
 header {
     text-align: center;
 }
 
+.head-nav-button {
+    font-size: 20px;
+    width: 300px;
+    height: 30px;
+}
+
 footer {
+    color: white;
     width: 700px;
 }
 
 a {
     color: var(--text-color);
+}
+
+.start-menu-button {
+    font-size: 200%;
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
 }
 
 

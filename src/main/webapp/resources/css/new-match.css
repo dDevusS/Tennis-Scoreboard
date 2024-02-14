@@ -35,10 +35,9 @@
 
 #errorMsg {
     margin-top: 15px;
-    min-height: 20px;
+    height: 20px;
     margin-bottom: 15px;
     font-size: 90%;
-    width: 100%;
     text-align: center;
     color: red;
 }
