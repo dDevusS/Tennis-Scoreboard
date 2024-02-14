@@ -1,42 +1,35 @@
 
 .ended-matches-div {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    height: 400px;
-    width: 600px;
+    display: flex;
+    flex-direction: column;
+    height: 330px;
+    width: 540px;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 0.7em;
     color: var(--text-color);
     font-weight: bold;
+    padding: 30px 30px 30px 30px;
 }
 
 .header-table-div {
-    height: 10%;
-    width: 100%;
-    position: absolute;
-    top: 5%;
+    display: flex;
+    flex-direction: row;
+    height: 30px;
     text-transform: uppercase;
+    justify-content: space-around;
 }
 
 .table-body-div {
-    height: 60%;
-    width: 100%;
-    position: absolute;
-    top: 20%;
+    min-height: 240px;
 }
 
 .matches-table {
-    position: absolute;
-    left: 5%;
-    width: 90%; /* Ширина таблицы */
-    border-collapse: collapse; /* Схлопывание границ */
+    border-collapse: collapse;
 }
 
 .matches-table td {
-    padding: 5px; /* Отступы внутри ячеек */
-    text-align: center; /* Выравнивание текста по центру */
+    padding: 5px;
+    text-align: center;
     color: var(--text-color);
 }
 
@@ -52,32 +45,33 @@
     color: red;
 }
 
-h4 {
-    position: absolute;
-    width: 30%;
-    height: 100%;
+.page-search-div {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
     text-align: center;
+    margin: 30px 25px 0 25px;
 }
 
-.page-search-div {
-    position: absolute;
-    width: 90%;
-    height: 50px;
-    right: 5%;
-    bottom: 5%;
-    text-align: center;
+.search-field-form {
+    display: flex;
+    flex-direction: row;
+    width: 350px;
 }
 
 .page-search-cell {
-    position: absolute;
-    bottom: 0;
     text-align: center;
 }
 
 .input-field {
+    width: 300px;
     text-transform: none;
 }
 
-footer {
-    top: 40%;
+.page-turner-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80px;
+    margin-left: 50px;
 }

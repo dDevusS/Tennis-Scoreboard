@@ -1,10 +1,7 @@
 .start-menu {
-    position: relative;
     text-align: center;
-    min-width: 500px;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    min-width: 450px;
+    margin-bottom: 10%;
 }
 
 .start-menu-button {

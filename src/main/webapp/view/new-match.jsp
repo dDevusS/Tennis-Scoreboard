@@ -45,39 +45,43 @@
     </nav>
 </header>
 
-<div class="new-match-div">
-    <form action="new-match" method="post" name="start" onsubmit="validateForm()">
+<div class="main-container">
 
-        <div id="first-player" class="input-field-div">
-            <h4>FIRST PLAYER</h4>
-            <label>
-                <input class="input-field" type="text" name="player1Name">
-            </label>
-        </div>
+    <div class="new-match-div">
+        <form action="new-match" method="post" name="start" onsubmit="validateForm()">
 
-        <div id="second-player" class="input-field-div">
-            <h4>SECOND PLAYER</h4>
-            <label>
-                <input class="input-field" type="text" name="player2Name">
-            </label>
-        </div>
+            <div class="input-fields-div">
+                <div id="first-player" class="input-field-div">
+                    <h4>FIRST PLAYER</h4>
+                    <label>
+                        <input class="input-field" type="text" name="player1Name">
+                    </label>
+                </div>
 
-        <div id="errorMsg"></div>
+                <div id="second-player" class="input-field-div">
+                    <h4>SECOND PLAYER</h4>
+                    <label>
+                        <input class="input-field" type="text" name="player2Name">
+                    </label>
+                </div>
+            </div>
 
-        <button class="start-button" type="button" onclick="submitForm()">Start match</button>
+            <div id="errorMsg"></div>
 
-    </form>
+            <button class="start-button" type="button" onclick="submitForm()">Start match</button>
+
+        </form>
+    </div>
+
 </div>
 
 <footer>
-    <p>
-        It is practice project created by <a target="_blank" href="https://github.com/dDevusS">dDevusS.</a>
-        <br>
-        You can see the technical specifications on
-        <a target="_blank" href="https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/">
-            the training course
-        </a> page made by Sergey Zhukov.
-    </p>
+    It is practice project created by <a target="_blank" href="https://github.com/dDevusS">dDevusS.</a>
+    <br>
+    You can see the technical specifications on
+    <a target="_blank" href="https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/">
+        the training course
+    </a> page made by Sergey Zhukov.
 </footer>
 
 </body>
