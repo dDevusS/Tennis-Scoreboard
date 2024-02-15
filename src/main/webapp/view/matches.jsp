@@ -70,7 +70,8 @@
                     <td style="width: 30%; border: 1px solid rgb(0, 0, 0);"><%= match.getWinner().getName() %>
                     </td>
                     <td style="width: 5%;">
-                        <form method="post" action="/Tennis_Scoreboard/matches?page=<%= pageNumber%><%= playerNameParam %>">
+                        <form method="post"
+                              action="/Tennis_Scoreboard/matches?page=<%= pageNumber%><%= playerNameParam %>">
                             <input type="hidden" name="matchId" value="<%= match.getId() %>">
                             <button class="delete-button" type="submit">X</button>
                         </form>
@@ -102,7 +103,8 @@
                 <div class="page-search-cell" style="min-width: 20px">
                     <% if (pageNumber > 1) { %>
                     <button class="back-page-button" type="button"
-                            onclick="window.location.href='/Tennis_Scoreboard/matches?page=<%= pageNumber - 1 %><%= playerNameParam %>'"><
+                            onclick="window.location.href='/Tennis_Scoreboard/matches?page=<%= pageNumber - 1 %>
+                                <%= playerNameParam %>'"><
                     </button>
                     <% } %>
                 </div>
@@ -114,7 +116,8 @@
                 <div class="page-search-cell" style="min-width: 20px">
                     <% if (pageNumber != lastPageNumber && lastPageNumber != 0) { %>
                     <button class="forward-page-button" type="button"
-                            onclick="window.location.href='/Tennis_Scoreboard/matches?page=<%= pageNumber + 1 %><%= playerNameParam %>'">>
+                            onclick="window.location.href='/Tennis_Scoreboard/matches?page=<%= pageNumber + 1 %>
+                                <%= playerNameParam %>'">>
                     </button>
                     <% } %>
                 </div>
@@ -128,12 +131,12 @@
 </div>
 
 <footer>
-        It is practice project created by <a target="_blank" href="https://github.com/dDevusS">dDevusS.</a>
+    It is practice project created by <a target="_blank" href="https://github.com/dDevusS">dDevusS.</a>
     <br>
-        You can see the technical specifications on
-        <a target="_blank" href="https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/">
-            the training course
-        </a> page made by Sergey Zhukov.
+    You can see the technical specifications on
+    <a target="_blank" href="https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/">
+        the training course
+    </a> page made by Sergey Zhukov.
 </footer>
 
 </body>

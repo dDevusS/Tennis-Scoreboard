@@ -1,7 +1,7 @@
 
 :root {
     --text-color: rgb(255, 211, 6);
-    --input-background-color: rgba(31,112,10,0.79);
+    --input-background-color: rgba(31, 112, 10, 0.79);
     --button-background-color: rgba(12, 63, 9, 0.85);
     --button-hover-text-color: rgb(243, 3, 11);
     --button-hover-background-color: rgba(72, 89, 8, 0.85);

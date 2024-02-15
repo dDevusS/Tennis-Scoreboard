@@ -3,11 +3,11 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-    <property name="connection.url">jdbc:h2:mem:TennisMatches</property>
-    <property name="connection.driver_class">org.h2.Driver</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
-    <mapping class="com.ddevuss.tennisScoreboard.model.Player"/>
-    <mapping class="com.ddevuss.tennisScoreboard.model.Match"/>
-  </session-factory>
+    <session-factory>
+        <property name="connection.url">jdbc:h2:mem:TennisMatches</property>
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+        <mapping class="com.ddevuss.tennisScoreboard.model.Player"/>
+        <mapping class="com.ddevuss.tennisScoreboard.model.Match"/>
+    </session-factory>
 </hibernate-configuration>

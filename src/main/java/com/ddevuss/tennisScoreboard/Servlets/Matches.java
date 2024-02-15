@@ -14,8 +14,17 @@ import java.util.List;
 @WebServlet("/matches")
 public class Matches extends HttpServlet {
 
-    private final MainMatchesService mainMatchesService = MainMatchesService.getINSTANCE();
     private final static int PAGE_SIZE = 5;
+    private final MainMatchesService mainMatchesService = MainMatchesService.getINSTANCE();
+
+    public static int getLastPageNumber(int numberAllEndedMatches) {
+        if (numberAllEndedMatches % PAGE_SIZE != 0) {
+            return numberAllEndedMatches / PAGE_SIZE + 1;
+        }
+        else {
+            return numberAllEndedMatches / PAGE_SIZE;
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -85,15 +94,6 @@ public class Matches extends HttpServlet {
             }
 
             return Math.min(page, lastPage);
-        }
-    }
-
-    public static int getLastPageNumber(int numberAllEndedMatches) {
-        if (numberAllEndedMatches % PAGE_SIZE != 0) {
-            return numberAllEndedMatches / PAGE_SIZE + 1;
-        }
-        else {
-            return numberAllEndedMatches / PAGE_SIZE;
         }
     }
 }

@@ -69,7 +69,7 @@ public class CalculationScoreService {
         }
     }
 
-    private static void  checkEndOfGame(CurrentMatch currentMatch, int playerId) {
+    private static void checkEndOfGame(CurrentMatch currentMatch, int playerId) {
         ActivePlayer activePlayer1 = currentMatch.getPlayer1();
         ActivePlayer activePlayer2 = currentMatch.getPlayer2();
         int fortyPoints = 3;
@@ -103,7 +103,7 @@ public class CalculationScoreService {
 
                 resetScoreAndPlusSet(activePlayer2, activePlayer1);
             }
-            else if (activePlayer1.getGame() == gamesBound && activePlayer2.getGame() == gamesBound){
+            else if (activePlayer1.getGame() == gamesBound && activePlayer2.getGame() == gamesBound) {
                 currentMatch.setTieBreak(true);
             }
         }

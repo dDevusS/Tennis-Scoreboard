@@ -12,46 +12,13 @@ import java.util.Random;
 public class DemonstrationService {
 
     private static final Random RANDOM = new Random();
-    private final MatchDAO matchDAO = MatchDAO.getInstance();
-    private final PlayerDAO playerDAO = PlayerDAO.getInstance();
     @Getter
     private static final DemonstrationService INSTANCE = new DemonstrationService();
     private static final List<String> listOfName = getListOfNames();
+    private final MatchDAO matchDAO = MatchDAO.getInstance();
+    private final PlayerDAO playerDAO = PlayerDAO.getInstance();
 
     private DemonstrationService() {
-    }
-
-    public void insertSevenEndedMatches() {
-
-        for (int count = 0; count < 7; count++) {
-            var playersNames = getPlayersNames();
-
-
-
-            Match match = Match.of()
-                    .player1(playerDAO.registerPlayerByName(playersNames[0]))
-                    .player2(playerDAO.registerPlayerByName(playersNames[1]))
-                    .winner(playerDAO.registerPlayerByName(playersNames[RANDOM.nextInt(2)]))
-                    .build();
-
-            matchDAO.save(match);
-        }
-    }
-
-    private String[] getPlayersNames() {
-        boolean isDifferenceNames = false;
-        String[] playersNames = new String[2];
-
-        while (!isDifferenceNames) {
-            playersNames[0] = listOfName.get(RANDOM.nextInt(listOfName.size()));
-            playersNames[1] = listOfName.get(RANDOM.nextInt(listOfName.size()));
-
-            if (!playersNames[0].equals(playersNames[1])) {
-                isDifferenceNames = true;
-            }
-        }
-
-        return playersNames;
     }
 
     private static List<String> getListOfNames() {
@@ -78,5 +45,36 @@ public class DemonstrationService {
                 Ken Rosewall""";
 
         return Arrays.stream(listOfNames.split("/")).map(String::trim).toList();
+    }
+
+    public void insertSevenEndedMatches() {
+
+        for (int count = 0; count < 7; count++) {
+            var playersNames = getPlayersNames();
+
+            Match match = Match.of()
+                    .player1(playerDAO.registerPlayerByName(playersNames[0]))
+                    .player2(playerDAO.registerPlayerByName(playersNames[1]))
+                    .winner(playerDAO.registerPlayerByName(playersNames[RANDOM.nextInt(2)]))
+                    .build();
+
+            matchDAO.save(match);
+        }
+    }
+
+    private String[] getPlayersNames() {
+        boolean isDifferenceNames = false;
+        String[] playersNames = new String[2];
+
+        while (!isDifferenceNames) {
+            playersNames[0] = listOfName.get(RANDOM.nextInt(listOfName.size()));
+            playersNames[1] = listOfName.get(RANDOM.nextInt(listOfName.size()));
+
+            if (!playersNames[0].equals(playersNames[1])) {
+                isDifferenceNames = true;
+            }
+        }
+
+        return playersNames;
     }
 }

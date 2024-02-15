@@ -4,7 +4,6 @@ import com.ddevuss.tennisScoreboard.DAO.MatchDAO;
 import com.ddevuss.tennisScoreboard.DTO.CurrentMatch;
 import com.ddevuss.tennisScoreboard.model.Match;
 import com.ddevuss.tennisScoreboard.model.Player;
-import lombok.Getter;
 
 public class FinishedMatchPersistenceService {
 

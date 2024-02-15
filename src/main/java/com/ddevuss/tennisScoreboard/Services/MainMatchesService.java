@@ -60,11 +60,11 @@ public class MainMatchesService implements IMainMatchesService {
         return MATCH_DAO.findAllByPlayerName(playerName);
     }
 
-    public boolean deleteMatchById (int id) {
+    public boolean deleteMatchById(int id) {
         return MATCH_DAO.delete(id);
     }
 
-    private ActivePlayer getNewActivePlayer (Player player) {
+    private ActivePlayer getNewActivePlayer(Player player) {
         return ActivePlayer.of()
                 .id(player.getId())
                 .name(player.getName())

@@ -1,6 +1,5 @@
 package com.ddevuss.tennisScoreboard.Servlets;
 
-import com.ddevuss.tennisScoreboard.DTO.CurrentMatch;
 import com.ddevuss.tennisScoreboard.Services.MainMatchesService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
