@@ -19,37 +19,42 @@ public class Matches extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String playerName = req.getParameter("playerName");
-        List<Match> allEndedMatches;
-
-        if (playerName == null || playerName.isBlank()) {
-            allEndedMatches = mainMatchesService.getAllEndedMatches();
-        }
-        else {
-            allEndedMatches = mainMatchesService.getEndedMatchesByPlayerName(playerName);
-        }
-
-        doRequestWithPagination(req, resp, allEndedMatches);
+        doRequestWithPagination(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var matchId = Integer.parseInt(req.getParameter("matchId"));
         mainMatchesService.deleteMatchById(matchId);
-        var allEndedMatches = mainMatchesService.getAllEndedMatches();
 
-        doRequestWithPagination(req, resp, allEndedMatches);
+        doRequestWithPagination(req, resp);
     }
 
-    private void doRequestWithPagination(HttpServletRequest req, HttpServletResponse resp, List<Match> allEndedMatches)
+    private void doRequestWithPagination(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        int lastPageNumber = getLastPageNumber(allEndedMatches.size());
-        int pageNumber = getPageNumber(req, allEndedMatches.size());
-        var listMatchForPage = getListMatchForPage(pageNumber, allEndedMatches);
+        List<Match> requestedMatches = getRequestedMatches(req);
+
+        int lastPageNumber = getLastPageNumber(requestedMatches.size());
+        int pageNumber = getPageNumber(req, requestedMatches.size());
+        var listMatchForPage = getListMatchForPage(pageNumber, requestedMatches);
 
         req.setAttribute("lastPage", lastPageNumber);
         req.setAttribute("matches", listMatchForPage);
         req.getRequestDispatcher("/view/matches.jsp?page=" + pageNumber).forward(req, resp);
+    }
+
+    private List<Match> getRequestedMatches(HttpServletRequest req) {
+        String playerName = req.getParameter("playerName");
+        List<Match> requestedMatches;
+
+        if (playerName == null || playerName.isBlank()) {
+            requestedMatches = mainMatchesService.getAllEndedMatches();
+        }
+        else {
+            requestedMatches = mainMatchesService.getEndedMatchesByPlayerName(playerName);
+        }
+
+        return requestedMatches;
     }
 
     private List<Match> getListMatchForPage(int pageNumber, List<Match> allEndedMatches) {
