@@ -41,6 +41,9 @@
         <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/new-match'">
             Start new match
         </button>
+        <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/insertMatches'">
+            Add random matches
+        </button>
     </nav>
 </header>
 
