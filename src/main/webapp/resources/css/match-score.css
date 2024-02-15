@@ -43,7 +43,8 @@
     text-align: center;
     width: 40%;
     height: 90%;
-    font-size: 110%;
+    font-size: 100%;
+    text-transform: none;
     margin: 10px 10px 10px 10px;
 }
 
