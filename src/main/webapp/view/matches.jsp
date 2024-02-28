@@ -89,12 +89,12 @@
                            value="<%= playerName %>">
                 </div>
 
-                <div class="page-search-cell" style="margin-right: 2px">
-                    <button type="submit" onclick="clearPlayerName()">X</button>
-                </div>
-
                 <div class="page-search-cell">
                     <button type="submit">?</button>
+                </div>
+
+                <div class="page-search-cell" style="margin-right: 2px">
+                    <button type="submit" onclick="clearPlayerName()">X</button>
                 </div>
             </form>
 
