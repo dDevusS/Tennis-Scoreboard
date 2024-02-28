@@ -4,7 +4,7 @@ PROJECT_NAME="Tennis-Scoreboard"
 LOCAL_DIR=$(pwd)
 MANAGER_FILE="manage_container_tennis_scoreboard.sh"
 
-git clone https://github.com/dDevusS/$PROJECT_NAME.git || { echo "Error: filed to clone from https://github.com/dDevusS/$PROJECT_NAME.git"; exit 1; }
+git clone https://github.com/dDevusS/$PROJECT_NAME.git || { echo "Error: filed to clone from https://github.com/dDevusS/$PROJECT_NAME.git. Please, look into README on https://github.com/dDevusS/$PROJECT_NAME."; exit 1; }
 
 chmod +x ./$PROJECT_NAME/$MANAGER_FILE
 
