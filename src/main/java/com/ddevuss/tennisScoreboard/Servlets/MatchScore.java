@@ -39,7 +39,7 @@ public class MatchScore extends HttpServlet {
 
         if (currentMatch == null) {
             var allEndedMatches = mainMatchesService.getAllEndedMatches();
-            resp.sendRedirect("/Tennis_Scoreboard/matches?page="
+            resp.sendRedirect("/Tennis-Scoreboard/matches?page="
                     + Matches.getLastPageNumber(allEndedMatches.size()));
         }
         else {

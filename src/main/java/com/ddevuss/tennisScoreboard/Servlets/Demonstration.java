@@ -16,7 +16,7 @@ public class Demonstration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         DEMONSTRATION_SERVICE.insertSevenEndedMatches();
-        String redirectURL = "/Tennis_Scoreboard/matches";
+        String redirectURL = "/Tennis-Scoreboard/matches";
         resp.sendRedirect(redirectURL);
     }
 }

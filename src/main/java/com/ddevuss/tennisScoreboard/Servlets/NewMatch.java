@@ -25,7 +25,7 @@ public class NewMatch extends HttpServlet {
         String playerName2 = req.getParameter("player2Name");
 
         var matchUUID = mainMatchesService.createNewMatch(playerName1, playerName2);
-        String redirectURL = "/Tennis_Scoreboard/match-score?uuid=" + matchUUID.toString();
+        String redirectURL = "/Tennis-Scoreboard/match-score?uuid=" + matchUUID.toString();
 
         resp.sendRedirect(redirectURL);
     }

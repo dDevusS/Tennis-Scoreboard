@@ -12,10 +12,10 @@
 
 <header>
     <nav>
-        <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/new-match'">
+        <button class="head-nav-button" onclick="window.location.href='/Tennis-Scoreboard/new-match'">
             Start new match
         </button>
-        <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/matches'">
+        <button class="head-nav-button" onclick="window.location.href='/Tennis-Scoreboard/matches'">
             Show ended matches
         </button>
     </nav>

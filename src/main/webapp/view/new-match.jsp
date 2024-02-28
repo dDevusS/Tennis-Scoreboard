@@ -39,7 +39,7 @@
 
 <header>
     <nav>
-        <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/matches?page=1'">
+        <button class="head-nav-button" onclick="window.location.href='/Tennis-Scoreboard/matches?page=1'">
             Show ended matches
         </button>
     </nav>

@@ -38,10 +38,10 @@
 
 <header>
     <nav>
-        <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/new-match'">
+        <button class="head-nav-button" onclick="window.location.href='/Tennis-Scoreboard/new-match'">
             Start new match
         </button>
-        <button class="head-nav-button" onclick="window.location.href='/Tennis_Scoreboard/insertMatches'">
+        <button class="head-nav-button" onclick="window.location.href='/Tennis-Scoreboard/insertMatches'">
             Add random matches
         </button>
     </nav>
@@ -71,7 +71,7 @@
                     </td>
                     <td style="width: 5%;">
                         <form method="post"
-                              action="/Tennis_Scoreboard/matches?page=<%= pageNumber%><%= playerNameParam %>">
+                              action="/Tennis-Scoreboard/matches?page=<%= pageNumber%><%= playerNameParam %>">
                             <input type="hidden" name="matchId" value="<%= match.getId() %>">
                             <button class="delete-button" type="submit">X</button>
                         </form>
@@ -82,7 +82,7 @@
         </div>
 
         <div class="page-search-div">
-            <form class="search-field-form" method="get" action="/Tennis_Scoreboard/matches?page=1">
+            <form class="search-field-form" method="get" action="/Tennis-Scoreboard/matches?page=1">
                 <div class="page-search-cell" style="margin-right: 2px">
                     <input id="playerNameInput" class="input-field" type="text" name="playerName"
                            placeholder="Player name"
@@ -103,7 +103,7 @@
                 <div class="page-search-cell" style="min-width: 20px">
                     <% if (pageNumber > 1) { %>
                     <button class="back-page-button" type="button"
-                            onclick="window.location.href='/Tennis_Scoreboard/matches?page=<%= pageNumber - 1 %><%= playerNameParam %>'"><
+                            onclick="window.location.href='/Tennis-Scoreboard/matches?page=<%= pageNumber - 1 %><%= playerNameParam %>'"><
                     </button>
                     <% } %>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="page-search-cell" style="min-width: 20px">
                     <% if (pageNumber != lastPageNumber && lastPageNumber != 0) { %>
                     <button class="forward-page-button" type="button"
-                            onclick="window.location.href='/Tennis_Scoreboard/matches?page=<%= pageNumber + 1 %><%= playerNameParam %>'">>
+                            onclick="window.location.href='/Tennis-Scoreboard/matches?page=<%= pageNumber + 1 %><%= playerNameParam %>'">>
                     </button>
                     <% } %>
                 </div>
