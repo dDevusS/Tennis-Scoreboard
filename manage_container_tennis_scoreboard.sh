@@ -13,7 +13,12 @@ check_docker_image() {
         echo "Docker image \"$DOCKER_IMAGE\" already exists."
     else
         echo "Docker image \"$DOCKER_IMAGE\" does not exist. Building the image..."
-        docker build -t $DOCKER_IMAGE ./$PROJECT_NAME/ || { echo "Error: Failed to build Docker image. Please, look into README on $README_PATH"; exit 1; }
+        if ! docker build -t $DOCKER_IMAGE ./$PROJECT_NAME/; then
+            if ! docker build -t $DOCKER_IMAGE .; then
+                echo "Error: Failed to build Docker image. Please, look into README on $README_PATH"
+                exit 1
+            fi
+        fi
     fi
 }
 
