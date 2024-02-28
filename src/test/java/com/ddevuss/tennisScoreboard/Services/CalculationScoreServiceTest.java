@@ -182,6 +182,27 @@ public class CalculationScoreServiceTest {
     }
 
     @Test
+    @DisplayName("Deuce comes again if player in advantage-out win a boll.")
+    void resetDeuce_IfPlayerWithAdvantageOutWin() {
+        UUID matchUUID = MAIN_MATCHES_SERVICE.getUuidList().get(0);
+        CurrentMatch currentMatch = MAIN_MATCHES_SERVICE.getCurrentMatches().get(matchUUID);
+
+        makeDeuceSituation(currentMatch);
+        currentMatch.getPlayer1().setAdvantage(true);
+
+        plusPointToPlayer(matchUUID, currentMatch.getPlayer2().getId());
+
+        Assertions.assertAll(
+                "CurrentMatch must have deuce while nobody of player don't have advantage.",
+                () -> {
+                    assertThat(currentMatch.isDeuce()).isTrue();
+                    assertThat(currentMatch.getPlayer1().isAdvantage()).isFalse();
+                    assertThat(currentMatch.getPlayer2().isAdvantage()).isFalse();
+                }
+        );
+    }
+
+    @Test
     @DisplayName("First player must have 1 sets point," +
             " players scores and players games must reset to zero after coming 7-5 games")
     void playerGainsOneSetsPoint_AfterWinningSevenGamesFirst() {

@@ -36,9 +36,14 @@ public class CalculationScoreService {
             resetScoreAndPlusGame(currentMatch.getPlayer1(), currentMatch.getPlayer2());
             currentMatch.setDeuce(false);
         }
+        else if (currentMatch.getPlayer1().getId() == playerId && currentMatch.getPlayer2().isAdvantage()) {
+            currentMatch.getPlayer2().setAdvantage(false);
+        }
         else if (currentMatch.getPlayer1().getId() == playerId) {
             currentMatch.getPlayer1().setAdvantage(true);
-            currentMatch.getPlayer2().setAdvantage(false);
+        }
+        else if (currentMatch.getPlayer1().isAdvantage()) {
+            currentMatch.getPlayer1().setAdvantage(false);
         }
         else if (currentMatch.getPlayer2().isAdvantage()) {
             resetScoreAndPlusGame(currentMatch.getPlayer2(), currentMatch.getPlayer1());
@@ -46,7 +51,6 @@ public class CalculationScoreService {
         }
         else {
             currentMatch.getPlayer2().setAdvantage(true);
-            currentMatch.getPlayer1().setAdvantage(false);
         }
     }
 
