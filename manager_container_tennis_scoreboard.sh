@@ -62,7 +62,7 @@ show_help() {
         if [ -z "$image_exists" ]; then
             echo "  install        Build Docker image from local cloned repository"
         fi
-    echo "  run            Run Docker container on default port (8080) on PORT_NUMBER with --port PORT_NUMBER"
+    echo "  run            Run Docker container on default port (8080)"
     echo "  --port         Specify port number"
     echo "  stop           Stop and remove Docker container"
 }
