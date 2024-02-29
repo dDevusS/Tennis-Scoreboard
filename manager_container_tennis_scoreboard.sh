@@ -51,7 +51,12 @@ stop_docker_container() {
 
 # Function for getting help.
 show_help() {
-    echo "Usage: sh $0 {install|run [--port PORT_NUMBER]|stop}"
+  local image_exists=$(docker images -q $DOCKER_IMAGE)
+        if [ -z "$image_exists" ]; then
+            echo "Usage: sh $0 {install|run [--port PORT_NUMBER]|stop}"
+        else
+            echo "Usage: sh $0 {run [--port PORT_NUMBER]|stop}"
+        fi
     echo "Options:"
     local image_exists=$(docker images -q $DOCKER_IMAGE)
         if [ -z "$image_exists" ]; then
