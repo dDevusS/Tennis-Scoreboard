@@ -52,11 +52,11 @@ stop_docker_container() {
 # Function for getting help.
 show_help() {
     echo "Usage: sh $0 {install|run [--port PORT_NUMBER]|stop}"
-    local image_exists=$(docker images -q $DOCKER_IMAGE)
-    if [ -n "$image_exists" ]; then
-        echo "  install        Build Docker image from local cloned repository"
-    fi
     echo "Options:"
+    local image_exists=$(docker images -q $DOCKER_IMAGE)
+        if [ -z "$image_exists" ]; then
+            echo "  install        Build Docker image from local cloned repository"
+        fi
     echo "  run            Run Docker container on default port (8080) on PORT_NUMBER with --port PORT_NUMBER"
     echo "  --port         Specify port number"
     echo "  stop           Stop and remove Docker container"
