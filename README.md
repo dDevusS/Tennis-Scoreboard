@@ -50,14 +50,12 @@ The project aims to provide a practical learning experience in Java backend deve
    - Java: Collections, Object-Oriented Programming (OOP)
    - Design Pattern: MVC(S)
    - Build Tools: Gradle
-   - Backend Technologies:
-     - Java Servlets
-     - Web: GET and POST requests, forms
-     - JavaServer Pages (JSP)
+   - Java Servlets
+   - JavaServer Pages (JSP)
    - Databases: SQL, Hibernate, H2 (in-memory SQL database)
    - Frontend: HTML/CSS, block layout
    - Testing: Unit testing with JUnit 5
-   - Deployment: Docker for containerization, with scripts for container management and image creation
+   - Deployment: Docker for containerization, with bash scripts for container management and image creation
 
 2. **Motivation:**
    - Creating a client-server application with a web interface
