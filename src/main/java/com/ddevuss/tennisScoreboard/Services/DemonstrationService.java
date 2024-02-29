@@ -21,6 +21,21 @@ public class DemonstrationService {
     private DemonstrationService() {
     }
 
+    public void insertSevenEndedMatches() {
+
+        for (int count = 0; count < 7; count++) {
+            var playersNames = getPlayersNames();
+
+            Match match = Match.of()
+                    .player1(playerDAO.registerPlayerByName(playersNames[0]))
+                    .player2(playerDAO.registerPlayerByName(playersNames[1]))
+                    .winner(playerDAO.registerPlayerByName(playersNames[RANDOM.nextInt(2)]))
+                    .build();
+
+            matchDAO.save(match);
+        }
+    }
+
     private static List<String> getListOfNames() {
         String listOfNames = """
                 Bobby Riggs/
@@ -45,21 +60,6 @@ public class DemonstrationService {
                 Ken Rosewall""";
 
         return Arrays.stream(listOfNames.split("/")).map(String::trim).toList();
-    }
-
-    public void insertSevenEndedMatches() {
-
-        for (int count = 0; count < 7; count++) {
-            var playersNames = getPlayersNames();
-
-            Match match = Match.of()
-                    .player1(playerDAO.registerPlayerByName(playersNames[0]))
-                    .player2(playerDAO.registerPlayerByName(playersNames[1]))
-                    .winner(playerDAO.registerPlayerByName(playersNames[RANDOM.nextInt(2)]))
-                    .build();
-
-            matchDAO.save(match);
-        }
     }
 
     private String[] getPlayersNames() {

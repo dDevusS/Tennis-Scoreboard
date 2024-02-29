@@ -45,6 +45,7 @@ public class PlayerDAO implements DAOInterface<Player>, IRegistrationPlayerByNam
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
             var query = session.createQuery("from Player", Player.class);
+
             return query.getResultList();
         }
     }
@@ -57,6 +58,7 @@ public class PlayerDAO implements DAOInterface<Player>, IRegistrationPlayerByNam
 
             if (maybePlayer == null) {
                 session.getTransaction().rollback();
+
                 return null;
             }
 
@@ -74,11 +76,13 @@ public class PlayerDAO implements DAOInterface<Player>, IRegistrationPlayerByNam
             var player = session.get(Player.class, id);
             if (player == null) {
                 session.getTransaction().rollback();
+
                 return false;
             }
             else {
                 session.remove(player);
                 session.getTransaction().commit();
+
                 return true;
             }
         }
@@ -98,6 +102,7 @@ public class PlayerDAO implements DAOInterface<Player>, IRegistrationPlayerByNam
             catch (NoResultException exception) {
                 Player player = Player.of().name(name).build();
                 session.persist(player);
+
                 return player;
             }
             finally {

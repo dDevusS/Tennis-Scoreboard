@@ -25,11 +25,6 @@ public class MatchDAO implements DAOInterface<Match>, IFindAllByPlayerName {
     public Match save(Match match) {
         try (var session = databaseConnector.getSession()) {
             session.beginTransaction();
-
-            //TODO: решить что делать с этим методом
-
-//            addPlayersIfNotExist(session, match);
-
             session.persist(match);
             session.getTransaction().commit();
 
@@ -87,6 +82,7 @@ public class MatchDAO implements DAOInterface<Match>, IFindAllByPlayerName {
 
             if (maybeMatch == null) {
                 session.getTransaction().rollback();
+
                 return null;
             }
 
@@ -106,6 +102,7 @@ public class MatchDAO implements DAOInterface<Match>, IFindAllByPlayerName {
 
             if (match == null) {
                 session.getTransaction().rollback();
+
                 return false;
             }
 
@@ -136,6 +133,7 @@ public class MatchDAO implements DAOInterface<Match>, IFindAllByPlayerName {
                 return matches;
             }
             catch (NoResultException exception) {
+
                 return matches;
             }
             finally {

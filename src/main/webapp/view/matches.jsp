@@ -103,7 +103,8 @@
                 <div class="page-search-cell" style="min-width: 20px">
                     <% if (pageNumber > 1) { %>
                     <button class="back-page-button" type="button"
-                            onclick="window.location.href='/Tennis-Scoreboard/matches?page=<%= pageNumber - 1 %><%= playerNameParam %>'"><
+                            onclick="window.location.href='/Tennis-Scoreboard/matches?page=<%= pageNumber - 1 %>
+                                <%= playerNameParam %>'"><
                     </button>
                     <% } %>
                 </div>
@@ -115,7 +116,8 @@
                 <div class="page-search-cell" style="min-width: 20px">
                     <% if (pageNumber != lastPageNumber && lastPageNumber != 0) { %>
                     <button class="forward-page-button" type="button"
-                            onclick="window.location.href='/Tennis-Scoreboard/matches?page=<%= pageNumber + 1 %><%= playerNameParam %>'">>
+                            onclick="window.location.href='/Tennis-Scoreboard/matches?page=<%= pageNumber + 1 %>
+                                <%= playerNameParam %>'">>
                     </button>
                     <% } %>
                 </div>
