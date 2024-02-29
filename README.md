@@ -82,6 +82,15 @@ The project aims to provide a practical learning experience in Java backend deve
 
 ## Installation and Setup Instructions:
 
+**Requirements:**
+
+Before proceeding with the installation, ensure the following prerequisites are met:
+
+- Git: Make sure Git is installed on your computer.
+- Docker: Docker must be installed to run the application in containers.
+
+
+
 To run this project locally, follow these steps:
 
 1. **Download the installation script:**
