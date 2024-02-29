@@ -51,7 +51,7 @@ stop_docker_container() {
 
 # Function for getting help.
 show_help() {
-    echo "Usage: $0 {install|run [--port PORT_NUMBER]|stop}"
+    echo "Usage: sh $0 {install|run [--port PORT_NUMBER]|stop}"
     local image_exists=$(docker images -q $DOCKER_IMAGE)
     if [ -n "$image_exists" ]; then
         echo "  install        Build Docker image from local cloned repository"
