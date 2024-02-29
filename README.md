@@ -94,7 +94,7 @@ Before proceeding with the installation, ensure the following prerequisites are 
 To run this project locally, follow these steps:
 
 1. **Download the installation script:**
-    - Download the install_tennis_scoreboard.sh script from the project directory.
+    - Download the **install_tennis_scoreboard.sh** script from the project directory.
 
 2. **Grant execute permissions:**
    ```bash
@@ -105,7 +105,7 @@ To run this project locally, follow these steps:
    sh install_tennis_scoreboard.sh
    ```
     - If access to the remote repository is restricted, manually download the project from GitHub. Then, grant execute
-      permissions to the manager_container_tennis_scoreboard.sh script and run the script:
+      permissions to the **manager_container_tennis_scoreboard.sh** script and run the script:
    ```bash
    chmod +x manager_container_tennis_scoreboard.sh
    sh manager_container_tennis_scoreboard.sh install
