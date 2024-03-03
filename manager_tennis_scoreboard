@@ -9,7 +9,7 @@
 #                                         SETUP                                                     #
 # 1. Set PROJECT_NAME.                                                                              #
 # 2. Set MANAGER_FILE. It must be name of the manager (default manager)                             #
-# 3. Set REMOTE_REPOSITORY.                                                                        #
+# 3. Set REMOTE_REPOSITORY.                                                                         #
 # 4. Set PROJECT_VERSION. For example, "1.0" or "latest".                                           #
 # 5. Set DOCKER_IMAGE name. "developer_name/project_name(lower case with '_'):${PROJECT_VERSION}"   #
 # 6. Set CONTAINER_NAME. Use lower case with '_' between words instead spaces.                      #
@@ -54,7 +54,7 @@ clone_repository() {
     echo "Cloning the repository ${REMOTE_REPOSITORY}"
             git clone "${REMOTE_REPOSITORY}" || {
               echo "Error: filed to clone from ${REMOTE_REPOSITORY}.";
-              echo "Please, look into README on https://github.com/dDevusS/${PROJECT_NAME}.";
+              echo "Please, look into README on ${README_PATH}.";
               exit 1;
               }
 }
