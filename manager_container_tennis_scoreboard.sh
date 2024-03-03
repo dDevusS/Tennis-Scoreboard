@@ -1,38 +1,91 @@
 #!/bin/bash
 
 PROJECT_NAME="Tennis-Scoreboard"
+LOCAL_DIR=$(pwd)
+REPOSITORY_DIR=${LOCAL_DIR}/${PROJECT_NAME}
+MANAGER_FILE="manager_contaner_tennis_scoreboard.sh"
+
 PROJECT_VERSION="1.0"
-DOCKER_IMAGE="ddevuss/tennis-scoreboard:$PROJECT_VERSION"
+DOCKER_IMAGE="ddevuss/tennis-scoreboard:${PROJECT_VERSION}"
 CONTAINER_NAME="tennis_scoreboard_container"
 README_PATH="https://github.com/dDevusS/Tennis-Scoreboard"
 
+
 # Function for checking existing image and creating if not exist.
-check_docker_image() {
-    local image_exists=$(docker images -q $DOCKER_IMAGE)
-    if [ -n "$image_exists" ]; then
+init_image() {
+    if [[ -n $(docker images -q $DOCKER_IMAGE) ]]; then
         echo "Docker image \"$DOCKER_IMAGE\" already exists."
+        exit 0
     else
-        echo "Docker image \"$DOCKER_IMAGE\" does not exist. Building the image..."
-        docker build -t $DOCKER_IMAGE . || {
+        echo "Docker image \"$DOCKER_IMAGE\" does not exist. Preparing to build the image..."
+
+        if ! search_repository; then
+          clone_repository
+        fi
+
+        echo "Building the image ..."
+        docker build -t $DOCKER_IMAGE ${REPOSITORY_DIR} || {
           echo "Error: Failed to build Docker image. Please, look into README on $README_PATH";
           exit 1;
           }
     fi
 }
 
+# Clone repository
+clone_repository() {
+    echo "Cloning the repository https://github.com/dDevusS/${PROJECT_NAME}.git"
+            git clone https://github.com/dDevusS/${PROJECT_NAME}.git || {
+              echo "Error: filed to clone from https://github.com/dDevusS/${PROJECT_NAME}.git.";
+              echo "Please, look into README on https://github.com/dDevusS/${PROJECT_NAME}.";
+              exit 1;
+              }
+}
+
+# Searching local repository.
+search_repository() {
+    echo "Searching repository on ${LOCAL_DIR} ..."
+
+    if [[ $( pwd | xargs basename ) == "${PROJECT_NAME}" ]]; then
+        REPOSITORY_DIR=$(pwd)
+        echo "Found local repository on ${REPOSITORY_DIR}"
+    elif ls | grep -x "${PROJECT_NAME}"; then
+        echo "Found local repository on ${REPOSITORY_DIR}"
+    else
+        echo "Local repository hasn't been found."
+        return 1
+    fi
+}
+
+# Validation port value.
+validate_port() {
+    local port="$1"
+    if ! [[ "${port}" =~ ^[0-9]+$ ]]; then
+        echo "Error: Port value must be number."
+        exit 1
+    fi
+
+    if ((port < 1 || port > 65535)); then
+        echo "Error: Port value must be from 1 to 65535."
+        exit 1
+    fi
+}
+
 # Function for running Docker container.
 run_docker_container() {
-    local port=$1
+  local port=8080
+    if [[ "$1" = "--port" ]] && validate_port "$2" ; then
+      port="$2"
+    fi
 
     # Checking existing of the container and creating it, if not exist, then running the container.
     if docker ps -a --format '{{.Names}}' | grep -Eq "^$CONTAINER_NAME$"; then
-        echo "Container \"$CONTAINER_NAME\" already exists. Restarting the container on port $port..."
-        docker container stop $CONTAINER_NAME
-        docker container rm $CONTAINER_NAME
+        echo "Container \"${CONTAINER_NAME}\" already exists. Restarting the container on port ${port}..."
+        docker container stop ${CONTAINER_NAME}
+        docker container rm ${CONTAINER_NAME}
     fi
 
     echo "Running Docker container on port $port..."
-    docker run -d -p $port:8080 --name $CONTAINER_NAME $DOCKER_IMAGE || {
+    docker run -d -p "${port}":8080 --name ${CONTAINER_NAME} $DOCKER_IMAGE || {
       echo "Error: Failed to start Docker container.";
       exit 1;
       }
@@ -40,62 +93,130 @@ run_docker_container() {
 
 # Function for stopping and deleting the container.
 stop_docker_container() {
-    if docker ps -a --format '{{.Names}}' | grep -Eq "^$CONTAINER_NAME$"; then
-        echo "Stopping and removing Docker container \"$CONTAINER_NAME\"..."
-        docker container stop $CONTAINER_NAME
-        docker container rm $CONTAINER_NAME
+    if docker ps -a --format '{{.Names}}' | grep -Eq "^${CONTAINER_NAME}$"; then
+        echo "Stopping and removing Docker container \"${CONTAINER_NAME}\"..."
+        docker container stop ${CONTAINER_NAME}
+        docker container rm ${CONTAINER_NAME}
     else
-        echo "Container \"$CONTAINER_NAME\" does not exist."
+        echo "Container \"${CONTAINER_NAME}\" does not exist."
     fi
+}
+
+# Clean repository or image and container.
+clean() {
+    case $1 in
+        "")
+          delete_repository
+          ;;
+        "--all")
+          delete_all
+          ;;
+        "--docker")
+          clean_docker
+          ;;
+        *)
+          echo "Error: $1 is invalid command. Please, use --help for instructions."
+          exist 1
+    esac
+}
+
+# Delete repository
+delete_repository() {
+    echo "Preparing to delete local repository ..."
+    if search_repository; then
+      if [[ $(pwd) == "${REPOSITORY_DIR}" ]]; then
+        echo "Moving manager file ..."
+        cp -u $0 ..
+        cd ..
+        echo "Deleting repository ..."
+        rm -rf ${REPOSITORY_DIR}
+      else
+        echo "Deleting repository ..."
+        rm -rf ${REPOSITORY_DIR}
+      fi
+      echo "Local repository ${REPOSITORY_DIR} was deleted."
+    fi
+}
+
+delete_all() {
+  echo "Preparing to delete all files ${PROJECT_NAME}"
+  clean_docker
+  delete_repository
+
+    read -p "Are you sure you want to delete ${MANAGER_FILE} script? [y/N] " response
+    if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+      rm "$0"
+      echo "${PROJECT_NAME} has been deleted."
+    else
+      echo "Deletion of ${MANAGER_FILE} cancelled."
+    fi
+
+  echo "${PROJECT_NAME} has been deleted."
+}
+
+# Delete image and container if exist.
+clean_docker() {
+  echo "Preparing to remove the container ..."
+
+  if docker ps -a --format '{{.Names}}' | grep -Eq "^$CONTAINER_NAME$"; then
+    docker container stop ${CONTAINER_NAME}
+    docker container rm ${CONTAINER_NAME}
+    echo "The container has been deleted."
+  else
+    echo "The container hasn't been found."
+  fi
+
+  echo "Preparing to remove the image ..."
+
+  if [[ -n $(docker images -q $DOCKER_IMAGE) ]]; then
+    docker image rm -f ${DOCKER_IMAGE}
+    echo "The image has been deleted."
+  else
+    echo "Docker image \"$DOCKER_IMAGE\" does not exist."
+  fi
 }
 
 # Function for getting help.
 show_help() {
-  local image_exists=$(docker images -q $DOCKER_IMAGE)
-        if [ -z "$image_exists" ]; then
-            echo "Usage: sh $0 {install|run [--port PORT_NUMBER]|stop}"
+        if [ -z "$(docker images -q $DOCKER_IMAGE)" ]; then
+            echo "Usage: $0 {init|run [--port PORT_NUMBER]|stop|clean [--all|--docker]|--help}"
         else
-            echo "Usage: sh $0 {run [--port PORT_NUMBER]|stop}"
+            echo "Usage: $0 {run [--port PORT_NUMBER]|stop|clean [--all|--docker]|--help}"
         fi
+
     echo "Options:"
-    local image_exists=$(docker images -q $DOCKER_IMAGE)
-        if [ -z "$image_exists" ]; then
-            echo "  install        Build Docker image from local cloned repository"
+        if [ -z "$(docker images -q $DOCKER_IMAGE)" ]; then
+            echo "  init        Clone repository and build Docker image"
         fi
     echo "  run            Run Docker container on default port (8080)"
     echo "  --port         Specify port number"
     echo "  stop           Stop and remove Docker container"
+    echo "  clean          Remove local repository"
+    echo "  --all          Remove local repository, image, container and manager file"
+    echo "  --docker       Remove image and container"
+    echo "  --help         Getting help"
 }
 
 # Checking arguments
-if [ $# -eq 1 ]; then
-    case $1 in
-        "install")
-            check_docker_image
-            ;;
-        "run")
-            run_docker_container 8080
-            ;;
-        "stop")
-            stop_docker_container
-            ;;
-        "--help")
-            show_help
-            ;;
-        *)
-            echo "Invalid argument. Use '--help' for usage instructions."
-            exit 1
-            ;;
-    esac
-    elif [ $# -eq 3 ] && [ $1 = "run" ] && [ $2 = "--port" ]; then
-        port=$3
-        if [ "$port" -eq "$port" ] 2>/dev/null; then
-            run_docker_container $port
-        else
-            echo "Invalid port number."
-            exit 1
-        fi
-    else
-        echo "Invalid number of arguments. Use '--help' for usage instructions."
+case $1 in
+    "init")
+        init_image
+        ;;
+    "run")
+        run_docker_container "$2" "$3"
+        ;;
+    "stop")
+        stop_docker_container
+        ;;
+    "clean")
+        clean "$2"
+        ;;
+    "--help")
+        show_help
+        ;;
+    *)
+        echo "Invalid argument. Use '--help' for usage instructions."
         exit 1
-    fi
+        ;;
+esac
+
