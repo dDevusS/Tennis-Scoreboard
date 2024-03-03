@@ -2,16 +2,30 @@
 
 ######################
 # deploy manager 1.0 #
+# by dDevusS         #
 ######################
+
+#####################################################################################################
+#                                         SETUP                                                     #
+# 1. Set PROJECT_NAME.                                                                              #
+# 2. Set MANAGER_FILE. It must be name of the manager (default manager)                             #
+# 3. Set REMOTE_REPOSITORY.                                                                        #
+# 4. Set PROJECT_VERSION. For example, "1.0" or "latest".                                           #
+# 5. Set DOCKER_IMAGE name. "developer_name/project_name(lower case with '_'):${PROJECT_VERSION}"   #
+# 6. Set CONTAINER_NAME. Use lower case with '_' between words instead spaces.                      #
+# 7. Set README_PATH. It might be link to github repository of your project with README file.       #
+#                                                                                                   #
+#####################################################################################################
 
 PROJECT_NAME="Tennis-Scoreboard"
 LOCAL_DIR=$(pwd)
 REPOSITORY_DIR=${LOCAL_DIR}/${PROJECT_NAME}
-MANAGER_FILE="manager_container_tennis_scoreboard"
+MANAGER_FILE="manager_tennis_scoreboard"
+REMOTE_REPOSITORY="https://github.com/dDevusS/${PROJECT_NAME}.git"
 
 PROJECT_VERSION="1.0"
 DOCKER_IMAGE="ddevuss/tennis-scoreboard:${PROJECT_VERSION}"
-CONTAINER_NAME="tennis_scoreboard_container"
+CONTAINER_NAME="tennis_scoreboard"
 README_PATH="https://github.com/dDevusS/Tennis-Scoreboard"
 
 
@@ -35,11 +49,11 @@ init_image() {
     fi
 }
 
-# Clone repository
+# Clone repository.
 clone_repository() {
-    echo "Cloning the repository https://github.com/dDevusS/${PROJECT_NAME}.git"
-            git clone https://github.com/dDevusS/${PROJECT_NAME}.git || {
-              echo "Error: filed to clone from https://github.com/dDevusS/${PROJECT_NAME}.git.";
+    echo "Cloning the repository ${REMOTE_REPOSITORY}"
+            git clone "${REMOTE_REPOSITORY}" || {
+              echo "Error: filed to clone from ${REMOTE_REPOSITORY}.";
               echo "Please, look into README on https://github.com/dDevusS/${PROJECT_NAME}.";
               exit 1;
               }
@@ -124,7 +138,7 @@ clean() {
     esac
 }
 
-# Delete repository
+# Delete repository.
 delete_repository() {
     echo "Preparing to delete local repository ..."
     if search_repository; then
@@ -142,6 +156,7 @@ delete_repository() {
     fi
 }
 
+# Delete image, container, repository and manager file.
 delete_all() {
   echo "Preparing to delete all files ${PROJECT_NAME}"
   clean_docker
@@ -201,7 +216,7 @@ show_help() {
     echo "  --help         Getting help"
 }
 
-# Checking arguments
+# Checking arguments.
 case $1 in
     init)
         init_image
