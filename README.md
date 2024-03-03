@@ -91,28 +91,29 @@ Before proceeding with the installation, ensure the following prerequisites are 
 
 To run this project locally, follow these steps:
 
-1. **Download the installation script:**
-    - Download the **install_tennis_scoreboard.sh** script from the project directory.
+1. **Download the manager script:**
+    - Download the **manager_tennis_scoreboard** script from the project directory.
 
 2. **Grant execute permissions:**
    ```bash
-   chmod +x install_tennis_scoreboard.sh
-
-3. **Run the installation script:**
+   chmod +x manager_tennis_scoreboard
+   ```
+   
+3. **Init the image:**
    ```bash
-   sh install_tennis_scoreboard.sh
+   ./manager_tennis_scoreboard init
    ```
     - If access to the remote repository is restricted, manually download the project from GitHub. Then, grant execute
-      permissions to the **manager_container_tennis_scoreboard.sh** script and run the script:
+      permissions to the **manager_tennis_scoreboard** script and run the script:
    ```bash
-   chmod +x manager_container_tennis_scoreboard.sh
-   sh manager_container_tennis_scoreboard.sh install
+   chmod +x manager_tennis_scoreboard
+   ./manager_tennis_scoreboard init
    ```
 
 4. **Start the application:**
     - Execute the following command:
    ```bash
-   sh manager_container_tennis_scoreboard.sh run
+   ./manager_tennis_scoreboard run
    ```
     - Application will be access on:
    ```
@@ -124,7 +125,7 @@ To run this project locally, follow these steps:
 For additional help use:
 
 ```bash
-sh manager_container_tennis_scoreboard.sh --help
+./manager_tennis_scoreboard --help
 ```
 
 
